@@ -137,9 +137,9 @@ partial class AISisterAIChanGhost : Ghost
             foreach(var choice in onichanResponse.Take(3))
             {
                 if(deferredEventTalkBuilder == null)
-                    deferredEventTalkBuilder = talkBuilder.Marker().AppendChoice(choice).LineFeed();
+                    deferredEventTalkBuilder = AppendWordWrapChoice(talkBuilder, choice);
                 else
-                    deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice(choice).LineFeed();
+                    deferredEventTalkBuilder = AppendWordWrapChoice(deferredEventTalkBuilder, choice);
             }
         }
         if(deferredEventTalkBuilder == null)
@@ -181,20 +181,24 @@ partial class AISisterAIChanGhost : Ghost
             return e.ToString();
         }
     }
-    string EscapeLineBreak(string text){
+    string EscapeLineBreak(string text)
+    {
         return text.Replace("\r\n","\\n").Replace("\n","\\n").Replace("\r","\\n");
     }
-    string DeleteLineBreak(string text){
+    string DeleteLineBreak(string text)
+    {
         return text.Replace("\r\n","").Replace("\n","").Replace("\r","");
     }
-    string GetAIResponse(string response){
+    string GetAIResponse(string response)
+    {
         var lines = response.Split(new string[]{"\r\n", "\n", "\r"}, StringSplitOptions.None);
         var aiResponse = lines.FirstOrDefault(x=>x.StartsWith("アイのセリフ："));
         if(aiResponse == null)
             return "";
         return aiResponse.Replace("アイのセリフ：", "").Trim(' ','「','」');
     }
-    string[] GetOnichanRenponse(string response){
+    string[] GetOnichanRenponse(string response)
+    {
         var lines = response.Split(new string[]{"\r\n", "\n", "\r"}, StringSplitOptions.None);
         var onichanResponse = lines.Where(x=>x.StartsWith("兄のセリフ候補")).ToArray();
         if(onichanResponse == null)
@@ -240,6 +244,37 @@ partial class AISisterAIChanGhost : Ghost
         if(face.Contains("いやそれは"))
             return 16;
         return 0;
+    }
+    DeferredEventTalkBuilder AppendWordWrapChoice(TalkBuilder builder, string text)
+    {
+        builder = builder.Marker();
+        DeferredEventTalkBuilder deferredEventTalkBuilder = null;
+        foreach(var choice in WordWrap(text))
+        {
+            if(deferredEventTalkBuilder == null)
+                deferredEventTalkBuilder = builder.AppendChoice(choice, text).LineFeed();
+            else
+                deferredEventTalkBuilder = deferredEventTalkBuilder.AppendChoice(choice, text).LineFeed();
+        }
+        return deferredEventTalkBuilder;
+    }
+    DeferredEventTalkBuilder AppendWordWrapChoice(DeferredEventTalkBuilder builder, string text)
+    {
+        builder = builder.Marker();
+        foreach(var choice in WordWrap(text))
+            builder = builder.AppendChoice(choice, text).LineFeed();
+        return builder;
+    }
+    IEnumerable<string> WordWrap(string text)
+    {
+        var width = 24;
+        for(int i=0;i<text.Length;i+=width)
+        {
+            if(i+width < text.Length)
+                yield return text.Substring(i, width);
+            else
+                yield return text.Substring(i);
+        }
     }
 }
 
