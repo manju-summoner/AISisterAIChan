@@ -70,9 +70,7 @@ partial class AISisterAIChanGhost : Ghost
 # 出力フォーマット
 アイのセリフ：{アイのセリフ}
 アイの表情：「普通」「うーん」「えぇ…」「にっこり」「恥ずかしい」「照れ隠し」「悲しい」「驚き」「恍惚」「しらけ」「だるー」「まじで！？」「びっくり」「むっつり」「いやそれは」
-兄のセリフ候補1：{兄のセリフ}
-兄のセリフ候補2：{兄のセリフ}
-兄のセリフ候補3：{兄のセリフ}
+"+Enumerable.Range(0, ((SaveData)SaveData).ChoiceCount).Select(x=>"兄のセリフ候補"+(x+1)+"：{兄のセリフ}").DefaultIfEmpty(string.Empty).Aggregate((a,b)=>a+"\r\n"+b)+@"
 会話を打ち切ったほうが自然な場合はアイのセリフや兄の返答の選択肢を出力しないでください。
 
 # 会話ログ

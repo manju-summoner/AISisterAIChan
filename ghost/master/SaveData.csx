@@ -20,6 +20,9 @@ public class SaveData : BaseSaveData {
     [DataMember]
     public string APIKey { get; set; }
 
+    [DataMember]
+    public int ChoiceCount { get; set; } = 3;
+
     /// <summary>
     /// デフォルト値はここで設定
     /// ただしsavedataのファイルがある際は初期化されないので、

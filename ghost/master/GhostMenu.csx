@@ -59,6 +59,7 @@ partial class AISisterAIChanGhost : Ghost
     private string SettingsTalk(){
         const string CHANGE_CHATGPT_API = "ChatGPTのAPIキーを変更する";
         const string CHANGE_RANDOMTALK_INTERVAL = "ランダムトークの頻度を変更する";
+        const string CHANGE_CHOICE_COUNT = "選択肢の数を変更する";
         const string CANCEL = "なんでもない";
         return new TalkBuilder()
         .Append("設定を変更するね。")
@@ -66,6 +67,7 @@ partial class AISisterAIChanGhost : Ghost
         .HalfLine()
         .Marker().AppendChoice(CHANGE_CHATGPT_API).LineFeed()
         .Marker().AppendChoice(CHANGE_RANDOMTALK_INTERVAL).LineFeed()
+        .Marker().AppendChoice(CHANGE_CHOICE_COUNT).LineFeed()
         .HalfLine()
         .Marker().AppendChoice(CANCEL)
         .BuildWithAutoWait()
@@ -77,6 +79,8 @@ partial class AISisterAIChanGhost : Ghost
                     return ChangeChatGPTAPITalk();
                 case CHANGE_RANDOMTALK_INTERVAL:
                     return ChangeRandomTalkIntervalTalk();
+                case CHANGE_CHOICE_COUNT:
+                    return ChangeChoiceCountTalk();
                 default:
                     return new TalkBuilder().Append("また何か変えたくなったら呼んでね。").BuildWithAutoWait();
             }
@@ -136,5 +140,33 @@ partial class AISisterAIChanGhost : Ghost
                                             return new TalkBuilder().Append("また何か変えたくなったら呼んでね。").BuildWithAutoWait();
                                     }
                                 });
+    }
+    private string ChangeChoiceCountTalk(){
+        return new TalkBuilder().Append("会話時の選択肢の数を変更するよ。……選択肢って何？").LineFeed().HalfLine()
+            .Marker().AppendChoice("0個").LineFeed()
+            .Marker().AppendChoice("1個").LineFeed()
+            .Marker().AppendChoice("2個").LineFeed()
+            .Marker().AppendChoice("3個").LineFeed()
+            .Marker().AppendChoice("変更しない").LineFeed()
+            .BuildWithAutoWait()
+            .ContinueWith(id=>
+            {
+                switch(id){
+                    case "0個":
+                        ((SaveData)SaveData).ChoiceCount = 0;
+                        return new TalkBuilder().Append("選択肢を表示しないようにするよ。").BuildWithAutoWait();
+                    case "1個":
+                        ((SaveData)SaveData).ChoiceCount = 1;
+                        return new TalkBuilder().Append("選択肢を1個表示するよ。").BuildWithAutoWait();
+                    case "2個":
+                        ((SaveData)SaveData).ChoiceCount = 2;
+                        return new TalkBuilder().Append("選択肢を2個表示するよ。").BuildWithAutoWait();
+                    case "3個":
+                        ((SaveData)SaveData).ChoiceCount = 3;
+                        return new TalkBuilder().Append("選択肢を3個表示するよ。").BuildWithAutoWait();
+                    default:
+                        return new TalkBuilder().Append("また何か変えたくなったら呼んでね。").BuildWithAutoWait();
+                }
+            });
     }
 }
