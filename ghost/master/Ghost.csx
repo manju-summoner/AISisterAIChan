@@ -63,7 +63,7 @@ partial class AISisterAIChanGhost : Ghost
 兄の呼び方：おにいちゃん
 "+((SaveData)SaveData).AiProfile.Select(x=>x.Key+"："+x.Value).DefaultIfEmpty(string.Empty).Aggregate((a,b)=>a+"\r\n"+b)+@"
 
-# 兄（ユーザー）のプロフィール
+# 私のプロフィール
 性別：男
 性格：妹に甘いお兄ちゃん。妹のことをとても大切にしている。
 一人称：お兄ちゃん
@@ -76,8 +76,8 @@ partial class AISisterAIChanGhost : Ghost
 "+Enumerable.Range(0, ((SaveData)SaveData).ChoiceCount).Select(x=>"兄のセリフ候補"+(x+1)+"：{兄のセリフ}").DefaultIfEmpty(string.Empty).Aggregate((a,b)=>a+"\r\n"+b)+@"
 
 # 会話ルール
-会話を打ち切ったほうが自然な場合は兄の返答の選択肢を出力しないでください。
-同じセリフを繰り返すことはないようにしてください。
+会話を打ち切ったほうが自然な場合は兄の返答の選択肢を省略してください。
+会話履歴内のセリフを再利用しないでください。
 
 # 会話履歴
 "+messageLog;
