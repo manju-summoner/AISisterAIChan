@@ -142,7 +142,9 @@ partial class AISisterAIChanGhost : Ghost
                                 });
     }
     private string ChangeChoiceCountTalk(){
-        return new TalkBuilder().Append("会話時の選択肢の数を変更するよ。……選択肢って何？").LineFeed().HalfLine()
+        return new TalkBuilder()
+            .Append("会話時の選択肢の数を変更するよ。").LineFeed()
+            .Append("……選択肢って何？").LineFeed().HalfLine()
             .Marker().AppendChoice("0個").LineFeed()
             .Marker().AppendChoice("1個").LineFeed()
             .Marker().AppendChoice("2個").LineFeed()
