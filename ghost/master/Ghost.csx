@@ -48,7 +48,7 @@ partial class AISisterAIChanGhost : Ghost
         
         messageLog = message + "\r\n";
         
-        var prompt = @"以下プロフィールの妹のセリフをシミュレートしてください。
+        var prompt = @"以下のプロフィールの妹のセリフのシミュレート結果を1つ出力してください。
 
 # 妹のプロフィール
 名前：アイ
