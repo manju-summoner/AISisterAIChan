@@ -153,7 +153,18 @@ partial class AISisterAIChanGhost : Ghost
             if(onichanResponse.Contains(id))
                 BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{id}");
             if(id == "ログを見る")
-                return new TalkBuilder().Append("\\_q").Append(EscapeLineBreak(log)).LineFeed().Append(EscapeLineBreak(response)).Build();
+                return new TalkBuilder()
+                .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
+                .Append(EscapeLineBreak(response)).LineFeed()
+                .HalfLine()
+                .Marker().AppendChoice("戻る")
+                .Build()
+                .ContinueWith(x=>
+                {
+                    if(x=="戻る")
+                        return BuildTalk(response, createChoices, log);
+                    return "";
+                });
             if(id == "回答を入力する")
                 return new TalkBuilder().AppendUserInput().Build().ContinueWith(input=>
                 {
