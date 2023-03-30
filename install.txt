@@ -1,0 +1,4 @@
+type,ghost
+name,ai_sister_ai_chan
+directory,ai_sister_ai_chan
+

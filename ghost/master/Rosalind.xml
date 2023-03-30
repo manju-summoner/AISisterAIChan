@@ -1,0 +1,2275 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Rosalind</name>
+    </assembly>
+    <members>
+        <member name="T:Shiorose.Ghost">
+            <summary>
+            Rosalindを用いたゴースト開発者が継承すべき、SHIORIイベントに対する挙動を実装するクラス．
+            <remarks>各種イベントをハンドルするメソッドのコメントはukadocの引用 + 一部改変して書いています。</remarks>
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.UserName">
+            <summary>
+            ユーザ名
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.Homeurl">
+            <summary>
+            更新URL
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.SakuraRecommendSites">
+            <summary>
+            Sakura側おすすめサイト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.SakuraPortalSites">
+            <summary>
+            Sakura側ポータルサイト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.KeroRecommendSites">
+            <summary>
+            Kero側おすすめサイト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.KeroPortalSites">
+            <summary>
+            Kero側ポータルサイト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.RandomTalks">
+            <summary>
+            ランダムトークのリスト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.NextRandomTalk">
+            <summary>
+            次回再生予定のランダムトーク
+            </summary>
+        </member>
+        <member name="F:Shiorose.Ghost.talkTimingCount">
+            <summary>
+            次のランダムトークまでの秒数
+            </summary>
+        </member>
+        <member name="F:Shiorose.Ghost.mouseMoveCount">
+            <summary>
+            OnMouseMoveが呼ばれた回数のカウンタ
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost._saveData">
+            <summary>
+            （常用非推奨）セーブデータを保持するプロパティ。
+            セーブデータのロード時のみ使ってください。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.SaveData">
+            <summary>
+            セーブデータ。基本的にこのプロパティをオーバーライドしてBaseSaveDataを継承した独自クラスを返すようにすれば便利？
+            </summary>
+        </member>
+        <member name="P:Shiorose.Ghost.Resource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Shiorose.Ghost.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Shiorose.Ghost.OnFirstBoot(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32)">
+            <summary>
+            初回起動イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="vanishCount">Reference0 vanishされた回数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBoot(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Boolean,System.String)">
+            <summary>
+            初回起動イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="shellName">Reference0 起動時のシェル名.</param>
+            <param name="isHalt">Reference6 前回落ちたかどうか</param>
+            <param name="haltGhostName">Reference7 前回落ちたゴースト名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnClose(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            終了時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="reason">Reference0 終了理由. ユーザならuser, シャットダウンならsystem.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnCloseAll(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            SSPごと終了時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="reason">Reference0 終了理由. ユーザならuser, シャットダウンならsystem.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnGhostChanged(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストから切り替え時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="prevSakuraName">Reference0, 切り替え元ゴーストのSakura側の名前</param>
+            <param name="prevScript">Reference1 切り替え元の繰り替え時Script</param>
+            <param name="prevGhostName">Reference2 切り替え元のゴーストの名前</param>
+            <param name="prevGhostPath">Reference3 切り替え元のゴーストのPath</param>
+            <param name="nowGhostShellName">Reference7 切り替わった（今の）ゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnGhostChanging(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストへの切り替え時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="nextSakuraName">Reference0 切り替え先のゴーストの本体側の名前</param>
+            <param name="changeReason">Reference1 切り替え理由: 手動だとmanual, システムによる場合だとautomatic</param>
+            <param name="nextGhostName">Reference2 切り替え先のゴーストの名前</param>
+            <param name="nextGhostPath">Reference3 切り替え先のゴーストのPath</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnGhostCalled(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストから呼び出し時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="calledSakuraName">Reference0 呼び出し元ゴーストのSakura側の名前</param>
+            <param name="calledScript">Reference1 呼び出し元ゴーストの呼び出し時Script</param>
+            <param name="calledGhostName">Reference2 呼び出し元のゴーストの名前</param>
+            <param name="calledGhostPath">Reference3 呼び出し元のゴーストのPath</param>
+            <param name="nowGhostShellName">Reference7 呼び出された（今の）ゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnGhostCalling(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストの呼び出し時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="callingSakuraName">Reference0 呼び出すゴーストのSakura側の名前</param>
+            <param name="callingReason">Reference1 呼び出し理由: 手動だとmanual, システムによる場合だとautomatic</param>
+            <param name="callingGhostName">Reference2 呼び出すゴーストの名前</param>
+            <param name="callingGhostPath">Reference3 呼び出すゴーストのPath</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnGhostCallComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストの呼び出し完了時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="calledSakuraName">Reference0 呼び出し完了したゴーストのSakura側の名前</param>
+            <param name="calledScript">Reference1 呼び出し完了したゴーストの起動時Script</param>
+            <param name="calledGhostName">Reference2 呼び出し完了したゴーストの名前</param>
+            <param name="calledGhostShellName">Reference7 呼び出し完了したゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnOtherGhostBooted(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            ゴースト自身が呼び出したわけではない他のゴーストの起動時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="bootedSakuraName">Reference0 起動したゴーストのSakura側の名前</param>
+            <param name="bootedScript">Reference1 起動したゴーストの起動時Script</param>
+            <param name="bootedGhostName">Reference2 起動したゴーストの名前</param>
+            <param name="bootedGhostShellName">Reference7 起動したゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnOtherGhostChanged(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストの切り替わり時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="prevSakuraName">Reference0 切り替え元ゴーストのSakura側の名前</param>
+            <param name="nextSakuraName">Reference1 切り替え先ゴーストのSakura側の名前</param>
+            <param name="prevScript">Reference2 切り替え元ゴーストの切り替え時Script</param>
+            <param name="nextScript">Reference3 切り替え先ゴーストの切り替え時Script</param>
+            <param name="prevGhostName">Reference4 切り替え元ゴーストの名前</param>
+            <param name="nextGhostName">Reference5 切り替え先ゴーストの名前</param>
+            <param name="prevGhostShellName">Reference14 切り替え元ゴーストのシェル名</param>
+            <param name="nextGhostShellName">Reference15 切り替え先ゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnOtherGhostClosed(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            他のゴーストの終了時イベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="closedSakuraName">Reference0 終了したゴーストのSakura側の名前</param>
+            <param name="closedScript">Reference1 終了したゴーストの終了時Script</param>
+            <param name="closedGhostName">Reference2 終了したゴーストの名前</param>
+            <param name="closedGhostShellName">Reference3 終了したゴーストのシェル名</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnShellChanged(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            他のシェルから切り替わった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="nowShellName">Reference0 現在のシェル名。</param>
+            <param name="nowGhostName">Reference1（CROWのみ）Reference0と同じ。（SSPのみ）現在のゴースト名。</param>
+            <param name="nowShellPath">Reference2（SSPのみ）現在のシェルのパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnShellChanging(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            他のシェルへ切り替えた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="nextShellName">Reference0 切り替わるシェル名。</param>
+            <param name="nowShellName">Reference1（SSPのみ）切り替わる前（現在）のシェル名。</param>
+            <param name="nextShellPath">Reference2（SSPのみ）切り替わるシェルのパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnDressupChanged(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Boolean,System.String)">
+            <summary>
+            着せ替えが切替えられた際に発生する。
+            このイベントの後に発生するOnNotifyDressupInfoも参照すること。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="charId">Reference0 着せ替え対象のキャラクターID。</param>
+            <param name="partsName">Reference1 パーツの名称。</param>
+            <param name="isEnable">Reference2 有効になった時に1、無効になった時に0。</param>
+            <param name="category">Reference3 パーツのカテゴリ名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBalloonChange(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            他のバルーンから切り替わった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="nowBalloonName">Reference0 切り替わったバルーン名。</param>
+            <param name="nowBalloonPath">Reference1 切り替わったバルーンのパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnWindowStateRestore">
+            <summary>
+            最小化が解除された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnWindowStateMinimize">
+            <summary>
+            最小化が指示された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnFullScreenAppMinimize">
+            <summary>
+            全画面表示のアプリ起動に対するSSP最小化の際に発生。
+            通常の最小化時に発生するOnWindowStateMinimizeに上書きされる。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnFullScreenAppRestore">
+            <summary>
+            全画面表示のアプリ終了に対するSSP最小化復帰の際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVirtualDesktopChanged(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            仮想デスクトップが切り替わった際に発生。
+            現状Windows 10上でのみ有効。
+            実験的機能のため今後仕様が変わる可能性がある。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="state">Reference0 current：現在の仮想デスクトップとゴースト表示中のデスクトップが同じ
+            hidden：仮想デスクトップが切り替えられ、非表示状態
+            minimize：ウインドウが最小化されておりどの仮想デスクトップに属するかわからない</param>
+            <param name="vDesktopId">Reference1 現在の仮想デスクトップID。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnCacheSuspend">
+            <summary>
+            ゴーストキャッシュに入った際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnCacheRestore">
+            <summary>
+            ゴーストキャッシュから出た際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSysResume(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            サスペンド（スリープ・休止状態（ハイバネーション）両方）解除の際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="resumeReason">Reference0 解除理由。通常normal、システムのスケジュールによる自動解除時auto、バッテリー切れで非常停止した場合critical（Windows Vista以降廃止）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBasewareUpdating(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            本体更新時、ダウンロードが終わりファイル更新を開始する前に発生。このイベントに反応がない場合はOnCloseAll、OnCloseの順に発生する。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="nowVersionNumber">Reference0 更新前のバージョン番号　例：2.3.58</param>
+            <param name="nowDetailVersionNumber">Reference1 更新前のWindowsエクスプローラで見られるプロパティと同じバージョン番号　例：2.3.58.3000</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBasewareUpdated(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            本体更新終了後、ゴーストが起動する時に発生。このイベントに反応がない場合はOnBootが発生する。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="updatedVersionNumber">Reference0 更新後のバージョン番号　例：2.3.59</param>
+            <param name="updatedDetailVersionNumber">Reference1 更新後のWindowsエクスプローラで見られるプロパティと同じバージョン番号　例：2.3.59.3000</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnTeachStart">
+            <summary>
+            TeachBoxのオープン時イベント
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnTeachInputCancel(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            TeachBoxが閉じられた際のイベント。
+            このイベントのReferenceはOnUserInputCancelと互換を持たせるために用意されている節がある。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="cancelReason">Reference1 タイムアウトした場合:timeout 閉じられた場合: close</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnTeach(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            TeachBoxからの入力があった際のイベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="teachRecents">Reference* 入力された言葉の履歴（0のほうが古くて末尾の方が新しい）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnCommunicate(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            コミュニケートボックスか、他ゴーストからスクリプトを渡された際のイベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="senderName">Reference0 送り主の名前。ユーザならuser、ゴーストならSakura側の名前</param>
+            <param name="script">Reference1 スクリプトの内容</param>
+            <param name="extInfo">Reference* 拡張情報</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnCommunicateInputCancel(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            コミュニケートボックスが閉じられた際のイベント。
+            このイベントのReferenceはOnUserInputCancelと互換を持たせるために用意されている節がある。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="cancelReason">Reference1 タイムアウトした場合:timeout 閉じられた場合: close</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUserInput(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            インプットボックスに入力があり、決定された際のイベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="inputBoxId">Reference0 インプットボックスのID</param>
+            <param name="content">Reference1 入力内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUserInputCancel(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            インプットボックスが閉じられた際のイベント
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="eventId">Reference0 入力イベントのID</param>
+            <param name="cancelReason">Reference1 タイムアウトした場合:timeout 閉じられた場合: close</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.InputboxAutocomplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            入力ボックス展開時に発生する、オートコンプリート機能を使うためのイベント。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="inputBoxType">Reference0 入力ボックスの種類を表す。inputbox, teachbox, communicateboxのどれか</param>
+            <param name="nextEventId">Reference1 種類がinputboxの場合のみ存在。入力完了時に発生するイベントの識別子</param>
+            <returns>オートコンプリートしたい文字列をバイト値1区切りでつないだ文字列。</returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSystemDialog(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            ファイル関連のダイアログで保存/OKが押された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="dialogType">Reference0 open・save・folder・colorのいずれか。</param>
+            <param name="eventId">Reference1 イベントID。</param>
+            <param name="result">Reference2 ファイルのパスまたはカンマ区切りのRGB値。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSystemDialogCancel(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            ファイル関連のダイアログでキャンセルが押された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="dialogType">Reference0 open・save・folder・colorのいずれか。</param>
+            <param name="eventId">Reference1 イベントID。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnConfigurationDialogHelp(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            設定ダイアログのヘルプボタンで項目をクリックした際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="dialogId">Reference0 ダイアログID。種類とページとの対応は以下。
+            <para>setup …… 一般</para>
+            <para>ghost …… ゴースト(1)</para>
+            <para>ghost2 …… ゴースト(2)</para>
+            <para>folder …… フォルダ</para>
+            <para>display …… 表示</para>
+            <para>talk …… 喋り/バルーン</para>
+            <para>network …… 接続(1)</para>
+            <para>network2 …… 接続(2)</para>
+            <para>biff …… POP</para>
+            <para>application …… 外部アプリ</para>
+            <para>messenger …… IM</para>
+            <para>ipmessenger …… IPMessenger</para>
+            <para>international …… 国際化</para>
+            <para>developer …… 開発/その他</para>
+            </param>
+            <param name="dialogTitle">Reference1 ダイアログタイトル。</param>
+            <param name="helpType">Reference2 項目タイプ:項目名。</param>
+            <param name="helpContent">Reference3 項目内容テキスト。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSecondChange(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Boolean,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            1秒ごとに発生する時間イベント。
+            トーク再生不能な時は、Reference3が0になった上でNOTIFYでイベント通知される。返されたスクリプトは無視される。
+            <para>ランダムトークの処理をここで行っているので、オーバーライドした上でランダムトークをしたい場合はbaseのメソッドも呼び出してください。</para>
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="uptime">Reference0 OSの連続起動時間（hour）</param>
+            <param name="isOffScreen">Reference1 見切れ時に1、それ以外は0。</param>
+            <param name="isOverlap">Reference2 重なり時に1、それ以外は0。</param>
+            <param name="canTalk">Reference3 トーク再生可能なときに1、それ以外は0。</param>
+            <param name="leftSecond">Reference4 ※SSPのみ　(OSレベルで)何も操作せず放置されている時間。秒単位。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMinuteChange(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Boolean,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            1分ごとに発生する時間イベント。
+            トーク再生不能な時は、Reference3が0になった上でNOTIFYでイベント通知される。返されたスクリプトは無視される。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="uptime">Reference0 OSの連続起動時間（hour）</param>
+            <param name="isOffScreen">Reference1 見切れ時に1、それ以外は0。</param>
+            <param name="isOverlap">Reference2 重なり時に1、それ以外は0。</param>
+            <param name="canTalk">Reference3 トーク再生可能なときに1、それ以外は0。</param>
+            <param name="leftSecond">Reference4 ※SSPのみ　(OSレベルで)何も操作せず放置されている時間。秒単位。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnHourTimeSignal(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Boolean,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            時報イベント。毎正時(?時0分0秒近く)に発生。
+            トーク再生不能な時はトークできるようになるまで待つ。そのため少しずれた時間に通知されることがある。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="uptime">Reference0 OSの連続起動時間（hour）</param>
+            <param name="isOffScreen">Reference1 見切れ時に1、それ以外は0。</param>
+            <param name="isOverlap">Reference2 重なり時に1、それ以外は0。</param>
+            <param name="canTalk">Reference3 常に1。(トーク再生可能になるまで待つため)</param>
+            <param name="leftSecond">Reference4 ※SSPのみ　(OSレベルで)何も操作せず放置されている時間。秒単位。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVanishSelecting">
+            <summary>
+            消滅が指示された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVanishSelected">
+            <summary>
+            確認ダイアログでYESが選択された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVanishCancel">
+            <summary>
+            確認ダイアログでNOが選択された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVanishButtonHold(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            消滅イベント中ダブルクリックでキャンセルされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="pauseScript">Reference0 中断の操作が起きたスクリプト。</param>
+            <param name="pauseScopeNum">Reference1 中断の操作が起きたバルーンのスコープ番号。本体側0、相方側1、それ以降も。</param>
+            <param name="pauseCharIndex">Reference2 中断位置。スクリプト先頭からの文字数で表現。文字数はさくらスクリプトのタグも含めたもの。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnVanished(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            直前のゴーストの消滅により自分に切り替わった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="vanishSakuraName">Reference0 消滅したゴーストの本体側の名前。</param>
+            <param name="vanishScript">Reference1 ※SSPのみ　消滅したゴーストのOnVanishSelectedイベントのスクリプト。</param>
+            <param name="vanishGhostName">Reference2 ※SSPのみ　消滅したゴースト名。</param>
+            <param name="nowGhostShellName">Reference7 ※SSPのみ　切り替わったゴーストのシェル名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnOtherGhostVanish(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String)">
+            <summary>
+            複数起動中、他のゴーストが消滅した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="vanishSakuraName">Reference0 消滅したゴーストの本体側の名前。</param>
+            <param name="vanishScript">Reference1 消滅したゴーストのOnVanishSelectedイベントのスクリプト。</param>
+            <param name="vanishGhostName">Reference2 消滅したゴースト名。</param>
+            <param name="vanishGhostShellName">Reference7 切り替わったゴーストのシェル名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnChoiceSelect(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            選択肢が選択された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="selectedId">Reference0 選択された選択肢のID。</param>
+            <param name="otherIds">Reference* ※CROWのみ　選択肢の２番目以降のID</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnChoiceSelectEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            選択肢が選択された際に発生。
+            OnChoiceSelectよりも先に開始する。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="selectedText">Reference0 選択肢のテキスト（ラベル）。</param>
+            <param name="selectedId">Reference1 選択肢のID。</param>
+            <param name="extInfo">Reference* 拡張情報(\qタグ内の3番目以降の引数)。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnChoiceTimeout(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            選択肢待ち時間がタイムアウトした際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="script">Reference0 タイムアウトしたスクリプト。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnChoiceHover(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            選択肢上で静止された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="hoverdText">Reference0 選択肢のテキスト（ラベル）。</param>
+            <param name="hoverdId">Reference1 選択肢のID。</param>
+            <param name="extInfo">Reference* 拡張情報(\qタグ内の3番目以降の引数)。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnAnchorSelect(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            \_aジャンパがクリックされた瞬間に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="anchorId">Reference0 選択されたジャンパのID。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnAnchorSelectEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            \_aジャンパがクリックされた瞬間に発生。このイベントにSHIORIが何も返さなかった場合にのみ、続けてOnAnchorSelectが発生する。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="anchorText">Reference0 選択されたジャンパのテキスト。</param>
+            <param name="anchorId">Reference1 選択されたジャンパのID。</param>
+            <param name="extInfo">Reference* 拡張情報(\_aタグ内の2番目以降の引数)。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSurfaceRestore(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            トーク後一定時間経過後に一度発生。
+            SSPの場合は本体設定の喋りタイムアウトで設定された秒数+１５秒後に発生（つまりバルーンが閉じてから１５秒後）。
+            ※喋りタイムアウト設定が０のときだけOnSurfaceRestoreが発生するまでバルーンが表示され続ける。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="sakuraSurface">Reference0 本体側の現在サーフェス。</param>
+            <param name="keroSurface">Reference1 相方側の現在サーフェス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnOtherSurfaceChange(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            （自分以外の）他のゴーストのサーフェス（表情）が変わった際に通知されます。
+            負荷対策のため、標準では無効のイベントです。このイベントを使用するためには、事前に \![set,othersurfacechange,true] で有効化する必要があります。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="ghostName">Reference0 ゴースト名</param>
+            <param name="sakuraName">Reference1 ゴーストSakura名</param>
+            <param name="windowId">Reference2 サーフェスが切り替わったウインドウID(Sakura=0)</param>
+            <param name="newSurfaceId">Reference3 新サーフェスID</param>
+            <param name="oldSurfaceId">Reference4 旧サーフェスID</param>
+            <param name="newSurfaceSize">Reference5 新しいサーフェスの大きさ(座標：左,上,右,下)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseClick(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右ボタン（＋中ボタン）でマウスクリックされた時(マウスボタンを1回押して放された瞬間)に、OnMouseUpに反応しない場合に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1、中クリックは2(互換仕様：OnMouseClickExへの移行を推奨)。</param>
+            <param name="deviceType">Reference6 ※SSPのみ　windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseClickEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右ボタン以外でマウスクリックされた時(マウスボタンを1回押して放された瞬間)に、OnMouseUpExに反応しない場合に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 ホイールクリック(または3ボタンマウスの中ボタン)はmiddle、拡張ボタン1(通常「戻る」に割当)はxbutton1、拡張ボタン2(通常「進む」に割当)はxbutton2。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDoubleClick(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右ボタンでダブルクリックされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1。</param>
+            <param name="deviceType">Reference6 ※SSPのみ　windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDoubleClickEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右ボタン以外でダブルクリックされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 ホイールクリック(または3ボタンマウスの中ボタン)はmiddle、拡張ボタン1(通常「戻る」に割当)はxbutton1、拡張ボタン2(通常「進む」に割当)はxbutton2。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseMultipleClick(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType,System.Int32)">
+            <summary>
+            3回以上連続でクリックされた際に発生。
+            同イベントに応答が無い場合、通常通りOnMouseClickとOnMouseDoubleClickの流れに戻る。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。それ以降2～</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <param name="comboCount">Reference7 連続クリック回数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseMultipleClickEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType,System.Int32)">
+            <summary>
+            左・右ボタン以外で3回以上連続でクリックされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。それ以降2～</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 ホイールクリック(または3ボタンマウスの中ボタン)はmiddle、拡張ボタン1(通常「戻る」に割当)はxbutton1、拡張ボタン2(通常「進む」に割当)はxbutton2。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <param name="comboCount">Reference7 連続クリック回数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseUp(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右のマウスボタンが放された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1、中クリックは2(互換仕様：OnMouseClickExへの移行を推奨)。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseUpEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右以外のマウスボタンが放された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="Reference3">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 ホイールクリック(または3ボタンマウスの中ボタン)はmiddle、拡張ボタン1(通常「戻る」に割当)はxbutton1、拡張ボタン2(通常「進む」に割当)はxbutton2。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDown(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右のマウスボタンが押された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1、中クリックは2(互換仕様：OnMouseClickExへの移行を推奨)。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDownEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            左・右以外のマウスボタンが押された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsType">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 ホイールクリック(または3ボタンマウスの中ボタン)はmiddle、拡張ボタン1(通常「戻る」に割当)はxbutton1、拡張ボタン2(通常「進む」に割当)はxbutton2。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseMove(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスが移動した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="wheelRotation">Reference2 マウスホイールの回転量および回転方向。</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 ※SSPのみ　windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseWheel(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスホイールが回転した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="wheelRotation">Reference2 マウスホイールの回転量および回転方向。</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 ※SSPのみ　windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseEnterAll(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスがキャラクターウインドウに入った際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseLeaveAll(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスがキャラクターウインドウから出た際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseEnter(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスが当たり判定に入った際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseLeave(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスが当たり判定から出た際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDragStart(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスをドラッグし始めた際に発生。ただしパッシブモードでは抑制される。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="wheelRotation">Reference2 マウスホイールの回転量および回転方向。</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseDragEnd(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスをドラッグし終えた際に発生。ただしパッシブモードでは抑制される。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="wheelRotation">Reference2 マウスホイールの回転量および回転方向。</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="buttonName">Reference5 左クリックは0、右クリックは1。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseHover(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            マウスが静止している際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="mouseX">Reference0 マウスカーソルの x 座標（ローカル座標）</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標（ローカル座標）</param>
+            <param name="charId">Reference3 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="partsName">Reference4 当たり判定の識別子。</param>
+            <param name="deviceType">Reference6 windows7以降、マルチタッチ対応環境のタッチパネル（※タッチパッド不可）からの入力でtouch、マウスなどからの入力でmouse</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseGesture(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            マウスを右ドラッグまたはホイールをドラッグした際に発生。
+            なおSSP2.3.53以降、タッチパネル環境でOnMouseGestureのReference5がupまたはdownであるようなものに対してSHIORIが何も返さなかった（204 No Contentが返された）場合、代替イベントとしてOnMouseWheelが発生する。詳細はOnMouseWheelの節を参照。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="charId">Reference0 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="mouseX">Reference1 マウスカーソルの x 座標</param>
+            <param name="mouseY">Reference1 マウスカーソルの y 座標</param>
+            <param name="partsName">Reference2 当たり判定の識別子。</param>
+            <param name="startMouseX">Reference3 右ドラッグを開始したマウスカーソルの x 座標</param>
+            <param name="startMouseY">Reference3 右ドラッグを開始したマウスカーソルの y 座標</param>
+            <param name="startPartsName">Reference4 右ドラッグを開始した当たり判定の識別子。</param>
+            <param name="gestureDirection">
+            Reference5 ジェスチャー方向。
+            left_up(左上) up(上) right_up(右上)
+            left(左) right(右)
+            left_down(左下) down(下) right_down(右下)
+            circle.cw(時計回り) circle.ccw(反時計回り)
+            end(右ボタンをはなした)
+            </param>
+            <param name="gestureRotation">Reference6 ジェスチャー移動角度。右0度から反時計回りに360度。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallBegin">
+            <summary>
+            アーカイブのインストール開始の際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},Shiorose.Resource.ShioriEvent.InstallType,System.String,System.String)">
+            <summary>
+            インストールが正常終了した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="installType">Reference0 インストールした物の識別子。</param>
+            <param name="installName">Reference1 インストールした物の名前（install.txtのname指定）。</param>
+            <param name="installName2">Reference2 インストールした物の名前2（ghost with balloonなどの場合のballoon側の名前）。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallCompleteEx(System.Collections.Generic.IDictionary{System.Int32,System.String},Shiorose.Resource.ShioriEvent.InstallType[],System.String[],System.String[])">
+            <summary>
+            インストールが正常終了した際に発生。
+            このイベントが無かった場合OnInstallCompleteが発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="installTypes">Reference0 インストールした物の識別子。</param>
+            <param name="installNames">Reference1 インストールした物の名前。</param>
+            <param name="installPaths">Reference2 インストールした場所。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},Shiorose.Resource.ShioriEvent.InstallFailureReason)">
+            <summary>
+            インストールに失敗した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="failureReason">Reference0 ※失敗理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallRefuse(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            インストールするファイルが他のゴーストを指名していた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="sakuraName">Reference0 指定されたゴーストの本体側名（install.txtのaccept指定、つまり本来渡すべき相手）。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInstallReroute(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            インストールするファイルが他のゴーストを指名していた際、かつ、指名対象ゴーストが一緒に起動していた時に発生。以降のインストールイベントは指名対象ゴースト側に発生する。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="sakuraName">Reference0 指定されたゴーストの本体側名（install.txtのaccept指定、つまり本来渡すべき相手）。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnFileDropping(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            ファイルをドラッグしたままのカーソルがゴースト上に乗った際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="filePath">Reference0 ドラッグしているファイルパス。</param>
+            <param name="charId">Reference1 ドロップされたキャラクターのスコープ番号。本体側0、相方1、3人目以降は2以降。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnDirectoryDrop(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            ディレクトリがDnD された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="dirPath">Reference0 ドロップされたディレクトリのパス。</param>
+            <param name="charId">Reference1 ドロップされたキャラクターのスコープ番号。本体側0、相方1、3人目以降は2以降。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnWallpaperChange(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            画像ファイルのDnDによって壁紙が変更された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="filePath">Reference0 ドロップされたファイルパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnFileDropEx(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String[],System.String)">
+            <summary>
+            ファイルがDnDされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="filePaths">Reference0 ドロップされたファイルパスを（複数あればbyte値1で区切って）返す。</param>
+            <param name="charId">Reference1 ドロップされたキャラクターのスコープ番号。本体側0、相方1、3人目以降は2以降。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdatedataCreating">
+            <summary>
+            ゴーストフォルダがDnDされた際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdatedataCreated">
+            <summary>
+            updates2.dauが作成された際に発生。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnNarCreating(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.InstallType)">
+            <summary>
+            install.txtの入ったゴーストフォルダがDnDされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="objectName">Reference0 narにするオブジェクト名。</param>
+            <param name="fileName">Reference1 narに出力されたファイル名。</param>
+            <param name="installType">Reference2 ※識別子。インストールの識別子参照。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnNarCreated(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.InstallType)">
+            <summary>
+            narファイルが作成された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="objectName">Reference0 narにするオブジェクト名。</param>
+            <param name="fileName">Reference1 narに出力されたファイル名。</param>
+            <param name="installType">Reference2 ※識別子。インストールの識別子参照。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnURLDropping(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            URLがドロップされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="urlPath">Reference0 URLパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnURLDropped(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            ドロップされたURLを受領し終わった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="filePath">Reference0 ダウンロードし終わったファイルのローカルパス。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnURLDropFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            ドロップされたURLの受領に失敗したかキャンセルされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="filePath">Reference0 ダウンロードし終わった分のファイルのローカルパス。</param>
+            <param name="failureReason">Reference1 ユーザーのダブルクリックによって中断した場合、artificial</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnURLQuery(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String)">
+            <summary>
+            URLがキャラクターウィンドウにドラッグ＆ドロップされた際に通知されます。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="urlPath">Reference0 URLパス。</param>
+            <param name="charId">Reference1 本体の場合は0、相方の場合は1。SSP/CROWでは2以降もある。</param>
+            <param name="mimeType">Reference2 ドロップされたURLのMIMEタイプ</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ネットワーク更新開始が指示された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="ghostName">Reference0 ゴースト名。</param>
+            <param name="fullPath">Reference1 フルパス。</param>
+            <param name="updateType">Reference3 更新対象の識別子</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateReady(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32,System.String[],Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            更新ファイルが確認された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="updateCount">Reference0 更新を行うファイルの総数。</param>
+            <param name="updateFileNames">Reference1 更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 更新対象種別。(shell ghost balloon headline plugin)</param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Boolean,System.String[],Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ネットワーク更新が成功し完了した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="isUpdated">Reference0 更新があればtrue, なければfalse</param>
+            <param name="updateFileNames">Reference1 更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 SSP：更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ネットワーク更新に失敗した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="failureReason">Reference0 失敗理由
+            <para> timeout -> タイムアウト</para>
+            <para> too slow -> 回線が非常に重い</para>
+            <para> md5 miss -> MD5不一致</para>
+            <para> artificial -> ユーザによる中断</para>
+            <para> 404等 -> 各ステータスコードによる失敗</para>
+            <para> fileio -> ストレージの容量不足</para>
+            <para> readonly -> 更新対象が読み取り専用だった</para>
+            </param>
+            <param name="failureFileName">Reference1 カンマでセパレートされた更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 SSP：※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOnDownloadBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Int32,System.Int32,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ファイルダウンロード開始の際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="downloadFileName">Reference0 ダウンロードするファイル名。</param>
+            <param name="downloadProgressCount">Reference1 ダウンロード中の更新ファイルが何番目か。</param>
+            <param name="downloadTotalCount">Reference2 更新を行うファイルの総数。</param>
+            <param name="updateType">Reference3 （SSPのみ）※更新対象種別。</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOnMD5CompareBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            MD5の照合開始の際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOnMD5CompareComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            MD5が一致した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOnMD5CompareFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            MD5が一致しなかった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のネットワーク更新開始が指示された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="ghostName">Reference0 ゴースト名。</param>
+            <param name="fullPath">Reference1 フルパス。</param>
+            <param name="updateType">Reference3 更新対象の識別子</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherReady(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32,System.String[],Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外の更新ファイルが確認された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="updateCount">Reference0 更新を行うファイルの総数。</param>
+            <param name="updateFileNames">Reference1 更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 更新対象種別。(shell ghost balloon headline plugin)</param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Boolean,System.String[],Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のネットワーク更新が成功し完了した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="isUpdated">Reference0 更新があればtrue, なければfalse</param>
+            <param name="updateFileNames">Reference1 更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 SSP：更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のネットワーク更新に失敗した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="failureReason">Reference0 失敗理由
+            <para> timeout -> タイムアウト</para>
+            <para> too slow -> 回線が非常に重い</para>
+            <para> md5 miss -> MD5不一致</para>
+            <para> artificial -> ユーザによる中断</para>
+            <para> 404等 -> 各ステータスコードによる失敗</para>
+            <para> fileio -> ストレージの容量不足</para>
+            <para> readonly -> 更新対象が読み取り専用だった</para>
+            </param>
+            <param name="failureFileName">Reference1 カンマでセパレートされた更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 SSP：※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherOnDownloadBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Int32,System.Int32,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のファイルダウンロード開始の際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="downloadFileName">Reference0 ダウンロードするファイル名。</param>
+            <param name="downloadProgressCount">Reference1 ダウンロード中の更新ファイルが何番目か。</param>
+            <param name="downloadTotalCount">Reference2 更新を行うファイルの総数。</param>
+            <param name="updateType">Reference3 （SSPのみ）※更新対象種別。</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherOnMD5CompareBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のMD5の照合開始の際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherOnMD5CompareComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のMD5が一致した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateOtherOnMD5CompareFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.String,Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ゴースト以外のMD5が一致しなかった際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="fileName">Reference0 比較するファイル名。</param>
+            <param name="exceptedMd5">Reference1 正しいMD5値。</param>
+            <param name="actualMd5">Reference2 落としたファイルのMD5値。</param>
+            <param name="updateType">Reference3 SSP　※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：※更新実行理由。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateCheckComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Boolean,System.String[],Shiorose.Resource.ShioriEvent.UpdateType,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ネットワーク更新のチェックに成功した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="isUpdate">Reference0 更新があればtrue、なければfalse。</param>
+            <param name="updateFileNames">Reference1 カンマでセパレートされた更新されたファイル名のリスト。</param>
+            <param name="updateType">Reference3 ※更新対象種別</param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。scriptのみ。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateCheckFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,Shiorose.Resource.ShioriEvent.UpdateReason)">
+            <summary>
+            ネットワーク更新のチェックに失敗した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="failureReason">Reference0 失敗理由
+            <para> timeout -> タイムアウト</para>
+            <para> too slow -> 回線が非常に重い</para>
+            <para> md5 miss -> MD5不一致</para>
+            <para> artificial -> ユーザによる中断</para>
+            <para> 404等 -> 各ステータスコードによる失敗</para>
+            <para> fileio -> ストレージの容量不足</para>
+            <para> readonly -> 更新対象が読み取り専用だった</para>
+            </param>
+            <param name="updateReason">Reference4 SSP 2.3：更新実行理由。scriptのみ。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateResult(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
+             <summary>
+             ネットワーク更新を実行した際に発生し、バルーン・シェル一括更新機能も含めてすべての更新結果を一括で通知する。
+             </summary>
+             <param name="reference">Reference</param>
+             <param name="updateResults">Reference* 更新を実行した順に、更新結果が以下のフォーマットで入っている
+             <para>（\1はバイト値1）</para>
+             <para>(※1)[\1] (※2)[\1] (※3)[\1] (※4)</para> 
+             <para>または</para>
+             <para>(※1)[\1] (※2)[\1] (※3)</para>
+            
+             <para>※1……ネットワーク更新対象の種別</para>
+             <para>※2……成功時「OK」　失敗時「NG」</para>
+             <para>※3……成功した場合は更新ファイル数(更新ファイルなし= noneの場合0)、失敗した場合は失敗理由。</para>
+             <para>※4……失敗して、かつ失敗原因のファイルがわかる場合、そのファイル名。</para>
+             </param>
+             <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnUpdateResultExplorer(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Collections.Generic.IDictionary{System.Int32,System.String})">
+             <summary>
+             ゴーストエクスプローラからネットワーク更新を実行した際に発生。OnUpdateResultのエクスプローラ版。
+             </summary>
+             <param name="reference">Reference</param>
+             <param name="updateResults">Reference* 更新を実行した順に、更新結果が以下のフォーマットで入っている
+             <para>（\1はバイト値1）</para>
+             <para>(※1)[\1] (※2)[\1] (※3)[\1] (※4)</para> 
+             <para>または</para>
+             <para>(※1)[\1] (※2)[\1] (※3)</para>
+            
+             <para>※1……ネットワーク更新対象の種別</para>
+             <para>※2……成功時「OK」　失敗時「NG」</para>
+             <para>※3……成功した場合は更新ファイル数(更新ファイルなし= noneの場合0)、失敗した場合は失敗理由。</para>
+             <para>※4……失敗して、かつ失敗原因のファイルがわかる場合、そのファイル名。</para>
+             </param>
+             <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSNTPBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            時計合わせが開始が指示された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="serverName">Reference0 接続先サーバ名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSNTPCompare(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Int32)">
+            <summary>
+            サーバに接続が確立された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="serverName">Reference0 接続先サーバ名。</param>
+            <param name="serverTime">Reference1 カンマでセパレートされたサーバ側の現時刻。</param>
+            <param name="localTime">Reference2 カンマでセパレートされたローカル側の現時刻</param>
+            <param name="diffSecond">Reference3 サーバとローカルの時刻のずれ。（秒単位）</param>
+            <param name="diffMSecond">Reference4 ※SSPのみ　サーバとローカルの時刻のずれ。（ミリ秒単位）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSNTPCorrect(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32)">
+            <summary>
+            ローカル時刻をサーバ時刻に修正した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="serverName">Reference0 接続先サーバ名。</param>
+            <param name="serverTime">Reference1 カンマでセパレートされたサーバ側の現時刻。</param>
+            <param name="localTime">Reference2 カンマでセパレートされたローカル側の現時刻</param>
+            <param name="diffSecond">Reference3 サーバとローカルの時刻のずれ。（秒単位）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnSNTPFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            時計合わせに失敗した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="serverName">Reference0 接続先サーバ名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBIFFBegin(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String)">
+            <summary>
+            メールチェック開始が指示された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="accountName">Reference2 チェックするメールサーバ名、SSP、CROWはアカウント名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBIFFComplete(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            メールチェックが成功した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="spoolMailCount">Reference0 スプールされているメールの通数、１オリジン表記。</param>
+            <param name="spoolMailByte">Reference1 スプールされているメールのバイト数。</param>
+            <param name="mailServerName">Reference2 チェックするメールサーバ名。</param>
+            <param name="newMailDiff">Reference3 メールの新着差分。</param>
+            <param name="topResults">Reference4 全メールのTopResult。POP通信全ヘッダリスト。メールごとバイト値2区切りの、ヘッダごとバイト値1区切り（通常はReference7の情報を利用すればよい）。</param>
+            <param name="listResult">Reference5 ListResult。メールサーバ上のID。POPコマンドの「LIST」の結果に相当する内容。</param>
+            <param name="uidlResult">Reference6 UidlResult。メールを区別するためのID。POPコマンドの「UIDL」の結果に相当する内容。</param>
+            <param name="mailSender">Reference7 メールの送信者。</param>
+            <param name="mailTitle">Reference7 メールのタイトル。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnBIFFFailure(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            メールチェックに成功した際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="failureReason">Reference0 ※失敗理由</param>
+            <param name="accountName">Reference2 チェックするメールサーバ名、SSP、CROWはアカウント名。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnKeyPress(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            本体がアクティブな状態でキーが入力された際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="keyName">Reference0 入力されたキー。(キートップに書かれた文字)</param>
+            <param name="keyCode">Reference1 入力されたキー。(Win32仮想キーコード)</param>
+            <param name="pressCount">Reference2 ※SSPのみ　キーの押しっぱなしカウント。</param>
+            <param name="charId">Reference3 ※SSPのみ　キーイベントが来たキャラクターウインドウID。</param>
+            <param name="extraKeys">Reference4 ※SSPのみ　修飾キーがカンマ区切りで列挙される。例："ctrl,alt"</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnTextDrop(System.Collections.Generic.IDictionary{System.Int32,System.String},System.String,System.String)">
+            <summary>
+            テキストデータがDnDされた際に発生。
+            </summary>
+            <param name="reference">Reference</param>
+            <param name="content">Reference0 テキスト内容。</param>
+            <param name="charId">Reference1 DnDされたキャラクターのID。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnInitialize">
+            <summary>
+            起動時に通知されるNotifyイベント
+            </summary>
+        </member>
+        <member name="M:Shiorose.Ghost.OnDestroy">
+            <summary>
+            終了時に通知されるNotifyイベント
+            </summary>
+        </member>
+        <member name="M:Shiorose.Ghost.OnRandomTalk">
+            <summary>
+            ランダムトークが発生するタイミングで呼び出される。
+            <para>ただしOnMinuteChangeをオーバーライドした場合は自分で呼び出すように実装してください。</para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.GetCallOnMouseStrokeTiming(System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            RosalindがOnMouseMoveを何回カウントしたらOnMouseStrokeを呼び出すかを返すメソッド。
+            オーバーライドでOnMouseStrokeの呼び出しタイミングを制御できます。
+            <para>引数で当たり判定の識別子が渡されるので、当たり判定が小さい部位は値を小さめにして調整するといいかも。</para>
+            <para>初期実装は100を固定で返すようになっています。</para>
+            </summary>
+            <param name="partsName">当たり判定の識別子</param>
+            <param name="deviceType">タッチパネルならtouch、それ以外ならmouse。</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Ghost.OnMouseStroke(System.String,Shiorose.Resource.ShioriEvent.DeviceType)">
+            <summary>
+            いわゆる当たり判定へのなでなで判定がされた際に呼び出されるメソッド。
+            なでなで判定の設定方法は<see cref="M:Shiorose.Ghost.GetCallOnMouseStrokeTiming(System.String,Shiorose.Resource.ShioriEvent.DeviceType)"/>を参照。
+            </summary>
+            <param name="partsName">当たり判定の識別子</param>
+            <param name="deviceType">タッチパネルならtouch、それ以外ならmouse。</param>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Resource.Choice">
+            <summary>
+            選択肢に関するクラス
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Choice.Count">
+            <summary>
+            現在登録されてる選択肢の数
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Choice.TimeoutScript">
+            <summary>
+            選択がタイムアップしたときに返すスクリプト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Choice.Title">
+            <summary>
+            選択肢の表示名
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.Choice.Create(System.String,System.Func{System.String},System.String)">
+            <summary>
+            選択肢を作成します
+            </summary>
+            <param name="title">選択肢のラベル</param>
+            <param name="talkScript">この選択肢を選んだ時に返すスクリプト</param>
+            <param name="id">選択肢のID(省略可。省略時はラベルをIDとして使う)</param>
+            <returns>選択肢のSakuraScript</returns>
+        </member>
+        <member name="M:Shiorose.Resource.Choice.Select(System.String)">
+            <summary>
+            指定のIDを持つ選択肢のスクリプトを取得します。
+            </summary>
+            <remarks>
+            このメソッドを実行した時点で選択肢のリストはクリアされます。
+            </remarks>
+            <param name="id"></param>
+            <returns>選択肢のスクリプト</returns>
+        </member>
+        <member name="M:Shiorose.Resource.Choice.ToString">
+            <summary>
+            この選択肢インスタンスをSakuraScriptで挿入する際の文字列表現に変換します。
+            </summary>
+            <returns>この選択肢のSakuraScript文字列</returns>
+        </member>
+        <member name="T:Shiorose.Resource.DeferredEvent">
+            <summary>
+            遅延して実行されるスクリプトを持つイベントの基底クラス。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.DeferredEvent.deferredScript">
+            <summary>
+            遅延して実行されるスクリプト
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.DeferredEvent.cancelScript">
+            <summary>
+            イベントキャンセル時に実行されるスクリプト
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.DeferredEvent.Id">
+            <summary>
+            イベントの識別子
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.DeferredEvent.TalkScript">
+            <summary>
+            イベント発生時に実行されるスクリプト
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.DeferredEvent.#ctor(System.String,System.Func{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="talkScript"></param>
+        </member>
+        <member name="T:Shiorose.Resource.RandomTalk">
+            <summary>
+            トークに関わるクラス
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.RandomTalk.Filter">
+            <summary>
+            トークが有効かを判断するメソッド
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.RandomTalk.TalkScript">
+            <summary>
+            トーク内容を返すメソッド
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.Create(System.Func{System.String},System.Func{System.Boolean})">
+            <summary>
+            トークを生成します
+            </summary>
+            <param name="talkScript">トーク内容を返すメソッド</param>
+            <param name="filter">このトークが選ばれる条件（省略可）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.Create(System.String,System.Func{System.Boolean})">
+            <summary>
+            トークを生成します
+            </summary>
+            <param name="talkScript">トーク内容</param>
+            <param name="filter">このトークが選ばれる条件（省略可）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.CreateWithAutoWait(System.Func{System.String},System.Func{System.Boolean})">
+            <summary>
+            自動ウェイト付きのトークを生成します
+            </summary>
+            <param name="talkScript">トーク内容を返すメソッド</param>
+            <param name="filter">このトークが選ばれる条件（省略可）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.CreateWithAutoWait(System.String,System.Func{System.Boolean})">
+            <summary>
+            自動ウェイト付きのトークを生成します
+            </summary>
+            <param name="talkScript">トーク内容</param>
+            <param name="filter">このトークが選ばれる条件（省略可）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.AutoWait(System.String)">
+            <summary>
+            渡されたスクリプトに自動Waitを挿入します。
+            </summary>
+            <param name="script"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Resource.RandomTalk.AutoWait(System.Func{System.String})">
+            <summary>
+            渡されたスクリプトを自動Waitを挿入するメソッドでラッピングします。
+            </summary>
+            <param name="script"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Resource.SaveDataManager">
+            <summary>
+            セーブデータを管理するクラス
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SaveDataManager.SaveFileName">
+            <summary>
+            セーブデータのファイル名
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.SaveDataManager.Load``1">
+            <summary>
+            セーブデータの読み込みを行う
+            </summary>
+            <typeparam name="T">セーブデータのクラス(BaseSaveDataを継承したクラス)</typeparam>
+            <returns>セーブデータのインスタンス</returns>
+        </member>
+        <member name="M:Shiorose.Resource.SaveDataManager.Save``1(``0)">
+            <summary>
+            セーブデータの保存を行う
+            </summary>
+            <typeparam name="T">セーブデータのクラス(BaseSaveDataを継承したクラス)</typeparam>
+            <param name="saveData">セーブデータのインスタンス</param>
+        </member>
+        <member name="T:Shiorose.Resource.BaseSaveData">
+            <summary>
+            セーブデータのクラス。ゴースト開発者はこのクラスを継承して保存したい項目を増やすと良い。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.BaseSaveData.TalkInterval">
+            <summary>
+            ランダムトークの間隔（秒）
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.BaseSaveData.UserName">
+            <summary>
+            ユーザ名
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.BaseSaveData.Save">
+            <summary>
+            セーブデータをファイルに書き込む
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.DeviceType">
+            <summary>
+            マウスイベントにおけるデバイスタイプ。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.DeviceType.MOUSE">
+            <summary>
+            マウス
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.DeviceType.TOUCH">
+            <summary>
+            タッチパネル
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.InstallType">
+            <summary>
+            インストールイベントにおけるインストール対象の識別子
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.SHELL">
+            <summary>
+            シェル
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.GHOST">
+            <summary>
+            ゴースト
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.BALLOON">
+            <summary>
+            バルーン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.PLUGIN">
+            <summary>
+            プラグイン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.HEADLINE">
+            <summary>
+            ヘッドライン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.SUPPLEMENT">
+            <summary>
+            サプリメント
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.GHOST_WITH_BALLOON">
+            <summary>
+            ゴーストとバルーン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.SHELL_WITH_BALLOON">
+            <summary>
+            シェルとバルーン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.CALENDAR_SKIN">
+            <summary>
+            カレンダーとスキン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.CALENDAR_PLUGIN">
+            <summary>
+            カレンダーとプラグイン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallType.PACKAGE">
+            <summary>
+            パッケージ
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.InstallFailureReason">
+            <summary>
+            インストールイベントにおけるインストール失敗理由の識別子
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.UNLHA32">
+            <summary>
+            lzh形式を展開するdllのロード失敗
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.EXTRACTION">
+            <summary>
+            解凍失敗（ファイル破損）
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.INVALID_TYPE">
+            <summary>
+            install.txtの不備
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.ARTIFICIAL">
+            <summary>
+            ユーザによるインストール中断
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.UNSUPPORTED">
+            <summary>
+            サポートしていないアーカイブ形式
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.InstallFailureReason.UNKNOWN">
+            <summary>
+            (Rosalind独自)未知の失敗理由が渡された
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.UpdateType">
+            <summary>
+            ネットワーク更新イベントにおける更新対象の識別子
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.GHOST">
+            <summary>
+            ゴースト
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.SHELL">
+            <summary>
+            シェル
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.BALLOON">
+            <summary>
+            バルーン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.PLUGIN">
+            <summary>
+            プラグイン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.HEADLINE">
+            <summary>
+            ヘッドライン
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.BASEWARE">
+            <summary>
+            ベースウェア(CROWのみ)
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateType.UNKNOWN">
+            <summary>
+            (Rosalind独自)Rosalindが未知の識別子
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.UpdateReason">
+            <summary>
+            ネットワーク更新イベントにおける更新理由の識別子
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateReason.AUTO">
+            <summary>
+            SSPの設定などによる自動更新
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateReason.MANUAL">
+            <summary>
+            オーナードローメニューからの選択などによる手動実行。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateReason.SCRIPT">
+            <summary>
+            さくらスクリプトタグによる更新。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Resource.ShioriEvent.UpdateReason.UNKNOWN">
+            <summary>
+            (Rosalind独自)Rosalindが未知の識別子
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.ShioriEvent.ShioriParamTypeUtil">
+            <summary>
+            SHIORIイベントで渡される各種識別子のenumを拡張するクラス。
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.SHIORIResource">
+            <summary>
+            SHIORI Resourceの値を管理するクラス。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.SakuraRecommendButtonCaption">
+            <summary>
+            本体側のおすすめサイトのキャプション
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.SakuraPortalButtonCaption">
+            <summary>
+            本体側のポータルサイトのキャプション
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.KeroRecommendButtonCaption">
+            <summary>
+            相方側のおすすめサイトのキャプション
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.KeroPortalButtonCaption">
+            <summary>
+            相方側のポータルサイトのキャプション
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.UpdateButtonCaption">
+            <summary>
+            ネットワーク更新の名称
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.VanishButtonCaption">
+            <summary>
+            消滅通告の名称
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.ReadmeButtonCaption">
+            <summary>
+            Read Me!の名称
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.VanishButtonVisible">
+            <summary>
+            消滅通告の表示。1で表示、0で非表示。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.SakuraPopupMenuVisible">
+            <summary>
+            本体側のオーナードローメニュー（右クリックメニュー）の表示。1で表示、0で非表示。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.KeroPopupMenuVisible">
+            <summary>
+            相方側のオーナードローメニューの表示。1で表示、0で非表示。
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.GetAIState">
+            <summary>
+            AIグラフのSHIORI/3.0版。
+            <para>(Rosalind未実装)</para>
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.SHIORIResource.GetAIStateEx">
+            <summary>
+            GetAIStateの複数指定可能版。
+            第一引数に何個目のグラフ用のデータかが0スタートで渡される。
+            ので、それに対応したデータを返してください。
+            表示しないグラフ番号には空文字列を返してください。
+            <para>(Rosalind未実装)</para>
+            </summary>
+        </member>
+        <member name="T:Shiorose.Resource.Site">
+            <summary>
+            おすすめサイト・ポータルサイトを表すクラス
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Site.Name">
+            <summary>
+            表示名
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Site.Url">
+            <summary>
+            URL
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Site.ImgPath">
+            <summary>
+            表示する画像のパス
+            </summary>
+        </member>
+        <member name="P:Shiorose.Resource.Site.TalkScript">
+            <summary>
+            選択時に実行するスクリプト
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.Site.#ctor(System.String,System.String,System.String)">
+             <summary>
+            
+             </summary>
+             <param name="name">表示名</param>
+             <param name="url">URL</param>
+             <param name="imgPath">表示する画像のパス</param>
+        </member>
+        <member name="T:Shiorose.Resource.SitesUtil">
+            <summary>
+            Siteの補助クラス
+            </summary>
+        </member>
+        <member name="M:Shiorose.Resource.SitesUtil.ToStringFromSites(System.Collections.Generic.IEnumerable{Shiorose.Resource.Site})">
+            <summary>
+            SiteのコレクションをSHIORIメソッドで定義された形式の文字列に変換する
+            </summary>
+            <param name="sites"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Rosalind">
+            <summary>
+            SHIORIイベントを解釈する、Rosalindのメインクラス
+            </summary>
+        </member>
+        <member name="F:Shiorose.Rosalind.BYTE_1_STR">
+            <summary>
+            バイト値1の文字列
+            </summary>
+        </member>
+        <member name="F:Shiorose.Rosalind.BYTE_1_CHAR">
+            <summary>
+            バイト値1の文字
+            </summary>
+        </member>
+        <member name="F:Shiorose.Rosalind.BYTE_2_STR">
+            <summary>
+            バイト値2の文字列
+            </summary>
+        </member>
+        <member name="P:Shiorose.Rosalind.ShioriDir">
+            <summary>
+            SHIORIの存在しているディレクトリ
+            </summary>
+        </member>
+        <member name="T:Shiorose.Sstp.SstpConnection">
+            <summary>
+            SSTPを簡単に送るためのクラス
+            </summary>
+        </member>
+        <member name="M:Shiorose.Sstp.SstpConnection.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="hostname"></param>
+            <param name="port"></param>
+        </member>
+        <member name="M:Shiorose.Sstp.SstpConnection.SendNotify1_1(System.String,System.String[])">
+            <summary>
+            NOTIFY1.1を送信します
+            </summary>
+            <param name="eventName"></param>
+            <param name="reference"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Sstp.SstpConnection.Send(Shiorose.Sstp.SstpProtocol)">
+            <summary>
+            指定のSSTPProtocolを送信します
+            </summary>
+            <param name="sstp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Sstp.SstpConnection.Send(System.String)">
+            <summary>
+            SSTPのポートに任意の文字列を送信します。
+            </summary>
+            <param name="sendDataStr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Sstp.SstpProtocol.ToSstpString">
+            <summary>
+            SSTP用のフォーマットの文字列に変換する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Support.TalkBuilder">
+            <summary>
+            トーク文字列作成を補助するクラスです。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Support.TalkBuilder.defaultScope">
+            <summary>
+            自動で初めに挿入されるスコープ番号です。
+            </summary>
+        </member>
+        <member name="F:Shiorose.Support.TalkBuilder.defaultSurface">
+            <summary>
+            自動で初めに挿入されるサーフェス番号です。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.#ctor">
+            <summary>
+            トークビルダーを作成します。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.Append(System.String)">
+            <summary>
+            トークに文字列を追加します。
+            </summary>
+            <param name="str">追加したい文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.Marker">
+            <summary>
+            トークにマーカー(\![*])を追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendChoice(System.String,System.String)">
+            <summary>
+            選択肢を追加します。
+            </summary>
+            <returns>
+            
+            </returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendTeach">
+            <summary>
+            TeachBoxを表示するさくらスクリプトを追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendCommunicate">
+            <summary>
+            CommunicateBoxを表示するさくらスクリプトを追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendUserInput(System.Int32,System.String)">
+            <summary>
+            ユーザ入力を受け付けるさくらスクリプトを追加します。
+            </summary>
+            <param name="timeout">タイムアウト時間（ミリ秒）</param>
+            <param name="defValue">InputBoxの初期値</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendPassInput(System.Int32,System.String)">
+            <summary>
+            パスワード入力を受け付けるさくらスクリプトを追加します。
+            </summary>
+            <param name="timeout">タイムアウト時間（ミリ秒）</param>
+            <param name="defValue">InputBoxの初期値</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendDateInput(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            年月日の入力を受け付けるさくらスクリプトを追加します。
+            </summary>
+            <param name="year">年の初期値</param>
+            <param name="month">月の初期値</param>
+            <param name="day">日の初期値</param>
+            <param name="timeout">タイムアウト時間（ミリ秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendSliderInput(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            スライダーによる数値入力を受け付けるさくらスクリプトを追加します。
+            </summary>
+            <param name="defValue">現在値</param>
+            <param name="min">最小</param>
+            <param name="max">最大</param>
+            <param name="timeout">タイムアウト時間（ミリ秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendTimeInput(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            時分秒の入力を受け付けるさくらスクリプトを追加します。
+            </summary>
+            <param name="hour">時の初期値</param>
+            <param name="minute">分の初期値</param>
+            <param name="second">秒の初期値</param>
+            <param name="timeout">タイムアウト時間（ミリ秒）</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.EmbedValue(System.Object)">
+            <summary>
+            トークに値を埋め込みます。
+            埋め込んだ値はオートウェイトの対象となりません。
+            </summary>
+            <param name="value">埋め込みたい値</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.AppendLine(System.String)">
+            <summary>
+            トークに文字列を追加し、かつ改行も追加します。
+            </summary>
+            <param name="str">追加したい文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.LineFeed(System.Int32)">
+            <summary>
+            トークに改行を追加します。
+            </summary>
+            <param name="count">追加する改行文字の数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.HalfLine">
+            <summary>
+            トークに半改行(\n[half])を追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.ChangeScope(System.Int32)">
+            <summary>
+            トークにスコープ変更文字列を追加します。
+            </summary>
+            <param name="scopeNumber">変更後のスコープ番号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.ChangeSurface(System.Int32)">
+            <summary>
+            トークにサーフェス変更文字列を追加します。
+            </summary>
+            <param name="surfaceNumber">変更後のサーフェス番号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.Build">
+            <summary>
+            トーク文字列を生成します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.TalkBuilder.BuildWithAutoWait">
+            <summary>
+            トーク文字列をオートウェイトを挿入した上で生成します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Support.DeferredEventTalkBuilder">
+            <summary>
+            各種ユーザの文字列入力もしくは選択肢選択で発生する、遅延イベントを含むトーク作成補助クラス
+            </summary>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.Marker">
+            <summary>
+            トークにマーカー(\![*])を追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.AppendChoice(System.String,System.String)">
+            <summary>
+            選択肢を追加します。
+            </summary>
+            <param name="title">選択肢の表示名</param>
+            <param name="id">選択肢の識別子</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.LineFeed(System.Int32)">
+            <summary>
+            トークに改行を追加します。
+            </summary>
+            <param name="count">追加する改行文字の数</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.HalfLine">
+            <summary>
+            トークに半改行(\n[half])を追加します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.ChangeScope(System.Int32)">
+            <summary>
+            トークにスコープ変更文字列を追加します。
+            </summary>
+            <param name="scopeNumber">変更後のスコープ番号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.ChangeSurface(System.Int32)">
+            <summary>
+            トークにサーフェス変更文字列を追加します。
+            </summary>
+            <param name="surfaceNumber">変更後のサーフェス番号</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.Build">
+            <summary>
+            遅延イベント付きトークオブジェクトを生成します。
+            <para>
+            通常はこの後ContinuteWithメソッドで遅延イベント発生時の処理を追加します。
+            </para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalkBuilder.BuildWithAutoWait">
+            <summary>
+            遅延イベント付きトークオブジェクトをオートウェイト挿入有りで生成します。
+            <para>
+            通常はこの後ContinuteWithメソッドで遅延イベント発生時の処理を追加します。
+            </para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Support.DeferredEventTalk">
+            <summary>
+            各種ユーザの文字列入力もしくは選択肢選択で発生する、遅延イベントを表すクラスです。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalk.ContinueWith(System.Func{System.String,System.String},System.Func{System.String})">
+            <summary>
+            このオブジェクトに関連付けられた遅延イベント時の処理を指定し、
+            かつこのオブジェクトが持つさくらスクリプトを返します。
+            </summary>
+            <param name="talkScript">遅延イベント発生時に実行するさくらスクリプトを返すメソッド</param>
+            <param name="cancelScript">遅延イベントがキャンセルされた時に実行するさくらスクリプトを返すメソッド</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.DeferredEventTalk.ToString">
+            <summary>
+            このオブジェクトが持つさくらスクリプトを返します。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Shiorose.Support.Util">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Shiorose.Support.Util.RandomChoice(System.String[])">
+            <summary>
+            引数で渡された文字列からランダムに一つ選択し返します。
+            </summary>
+            <param name="strs">文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:Shiorose.Support.Util.RandomChoice(System.Func{System.String}[])">
+            <summary>
+            引数で渡されたメソッドからランダムに一つ選択して"実行し、その値を返し"ます。
+            </summary>
+        </member>
+        <member name="T:Shiorose.Web.HttpToSstpServer">
+            <summary>
+            httpとsstpの仲介をするサーバです
+            </summary>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.#ctor">
+            <summary>
+            コンストラクタ。この時点ではサーバは起動しません。Start()を呼び出しましょう。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.Start">
+            <summary>
+            サーバをスタートします。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.OnRequested(System.Net.HttpListenerContext)">
+            <summary>
+            サーバにリクエストがあった時の処理を行うメソッドです。
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.OnGETRequested(System.Net.HttpListenerContext)">
+            <summary>
+            サーバにGETリクエストがあった時に実行されるメソッドです。
+            </summary>
+            <param name="context"></param>
+            <returns>jsonで返したいオブジェクト。返す値がない場合はnullを返してください。</returns>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.OnPostRequested(System.Net.HttpListenerContext)">
+            <summary>
+            サーバにGETリクエストがあった時に実行されるメソッドです。
+            </summary>
+            <param name="context"></param>
+            <returns>jsonで返したいオブジェクト。返す値がない場合はnullを返してください。</returns>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.Stop">
+            <summary>
+            サーバを一時停止します。
+            </summary>
+        </member>
+        <member name="M:Shiorose.Web.HttpToSstpServer.Close">
+            <summary>
+            サーバを終了します。
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,13 @@
+charset,UTF8
+
+craftman,manju_summoner
+craftmanw,饅頭遣い
+craftmanurl,https://twitter.com/manju_summoner
+
+name,AI妹アイちゃん
+type,ghost
+
+sakura.name,アイ
+kero.name,kero_name
+
+shiori,SHIOLINK.dll

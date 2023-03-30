@@ -1,0 +1,6 @@
+.vs/,nonar,noupdate
+.git/,nonar,noupdate
+.gitignore,nonar,noupdate
+.gitmodules,nonar,noupdate
+README.md,nonar,noupdate
+ghost/master/savedata.json,nonar,noupdate

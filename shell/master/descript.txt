@@ -1,0 +1,12 @@
+charset,UTF-8
+craftman,nekobottle
+id,master
+name,master
+type,shell
+craftmanw,ボトル猫
+craftmanurl,https://twitter.com/nekobottle
+
+sakura.balloon.offsetx,38
+sakura.balloon.offsety,58
+kero.balloon.offsetx,0
+kero.balloon.offsety,0

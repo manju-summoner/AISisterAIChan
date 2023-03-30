@@ -1,0 +1,71 @@
+charset,Shift_JIS
+
+descript
+{
+    version,1
+}
+
+surface0{
+    element0,base,000_000.png,0,0
+}
+
+surface1{
+    element0,base,002_000.png,0,0
+    element1,overlay,002_007e.png,0,0
+}
+surface2{
+    element0,base,008_000.png,0,0
+    element1,overlay,008_008.png,0,0
+}
+surface3{
+    element0,base,000_000.png,0,0
+    element1,overlay,000_005.png,0,0
+}
+surface4{
+    element0,base,003.png,0,0
+    element1,overlay,003_001b.png,0,0
+}
+surface5{
+    element0,base,003.png,0,0
+    element1,overlay,003_009.png,0,0
+}
+surface6{
+    element0,base,009_000.png,0,0
+    element1,overlay,009_004b.png,0,0
+}
+surface7{
+    element0,base,000_000.png,0,0
+    element1,overlay,000_002.png,0,0
+}
+surface8{
+    element0,base,008_000.png,0,0
+    element1,overlay,008_006d.png,0,0
+}
+surface9{
+    element0,base,005_000.png,0,0
+    element1,overlay,005_008c.png,0,0
+}
+surface12{
+    element0,base,007_000.png,0,0
+    element1,overlay,007_004c.png,0,0
+}
+surface13{
+    element0,base,004_000.png,0,0
+    element1,overlay,004_002f.png,0,0
+}
+surface14{
+    element0,base,004_000.png,0,0
+    element1,overlay,004_002b.png,0,0
+}
+surface15{
+    element0,base,001_000.png,0,0
+    element1,overlay,001_009.png,0,0
+}
+surface16{
+    element0,base,002_000.png,0,0
+    element1,overlay,002_007c.png,0,0
+}
+
+surface10{
+    element0,base,surface10.png,0,0
+}
