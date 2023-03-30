@@ -94,7 +94,7 @@ partial class AISisterAIChanGhost : Ghost
                                 .ContinueWith(apiKey=>
                                 {
                                     ((SaveData)SaveData).APIKey = apiKey;
-                                    return new TalkBuilder().Append("設定が終わったよ、お兄ちゃん。").BuildWithAutoWait();
+                                    return new TalkBuilder().Append("設定が終わったよ、おにいちゃん。").BuildWithAutoWait();
                                 });
     }
 
