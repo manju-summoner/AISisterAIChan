@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 partial class AISisterAIChanGhost : Ghost
 {
@@ -81,7 +82,12 @@ partial class AISisterAIChanGhost : Ghost
 # 会話履歴
 "+messageLog;
 
-        //System.IO.File.WriteAllText("D:\\prompt.txt", prompt);
+        if(((SaveData)SaveData).IsDevMode)
+        {
+            if(!Directory.Exists(".\\log"))
+                Directory.CreateDirectory(".\\log");
+            File.WriteAllText(".\\log\\prompt.txt", prompt);
+        }
 
         var request = new ChatGPTRequest()
         {
@@ -118,7 +124,13 @@ partial class AISisterAIChanGhost : Ghost
 
     string BuildTalk(string response, bool createChoices, string log){
         try{
-        //System.IO.File.WriteAllText("D:\\response.txt", response);
+        
+        if(((SaveData)SaveData).IsDevMode)
+        {
+            if(!Directory.Exists(".\\log"))
+                Directory.CreateDirectory(".\\log");
+            File.WriteAllText(".\\log\\response.txt", response);
+        }
 
         var aiResponse = GetAIResponse(response);
         var onichanResponse = GetOnichanRenponse(response);

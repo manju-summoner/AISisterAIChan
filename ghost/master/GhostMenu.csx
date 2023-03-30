@@ -64,6 +64,7 @@ partial class AISisterAIChanGhost : Ghost
         const string CHANGE_CHATGPT_API = "ChatGPTのAPIキーを変更する";
         const string CHANGE_RANDOMTALK_INTERVAL = "ランダムトークの頻度を変更する";
         const string CHANGE_CHOICE_COUNT = "選択肢の数を変更する";
+        string CHANGE_DEVMODE = "開発者モードを変更する（現在："+(((SaveData)SaveData).IsDevMode ? "有効" : "無効")+"）";
         const string BAKC = "戻る";
         return new TalkBuilder()
         .Append("設定を変更するね。")
@@ -72,22 +73,25 @@ partial class AISisterAIChanGhost : Ghost
         .Marker().AppendChoice(CHANGE_CHATGPT_API).LineFeed()
         .Marker().AppendChoice(CHANGE_RANDOMTALK_INTERVAL).LineFeed()
         .Marker().AppendChoice(CHANGE_CHOICE_COUNT).LineFeed()
+        .Marker().AppendChoice(CHANGE_DEVMODE).LineFeed()
         .HalfLine()
         .Marker().AppendChoice(BAKC)
         .BuildWithAutoWait()
         .ContinueWith(id=>
         {
-            switch(id)
+            if (id == CHANGE_CHATGPT_API)
+                return ChangeChatGPTAPITalk();
+            else if (id == CHANGE_RANDOMTALK_INTERVAL)
+                return ChangeRandomTalkIntervalTalk();
+            else if (id == CHANGE_CHOICE_COUNT)
+                return ChangeChoiceCountTalk();
+            else if (id == CHANGE_DEVMODE)
             {
-                case CHANGE_CHATGPT_API:
-                    return ChangeChatGPTAPITalk();
-                case CHANGE_RANDOMTALK_INTERVAL:
-                    return ChangeRandomTalkIntervalTalk();
-                case CHANGE_CHOICE_COUNT:
-                    return ChangeChoiceCountTalk();
-                default:
-                    return OpenMenu();
+                ((SaveData)SaveData).IsDevMode = !((SaveData)SaveData).IsDevMode;
+                return SettingsTalk();
             }
+            else
+                return OpenMenu();
         });
     }
 

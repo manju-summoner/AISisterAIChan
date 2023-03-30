@@ -45,8 +45,7 @@ public class ChatGPTTalk
                     while (!reader.EndOfStream)
                     {
                         var line = await reader.ReadLineAsync();
-                        //System.IO.File.AppendAllText(@"D:\test.txt", line);
-
+                        
                         if (!line.StartsWith("data:"))
                             continue;
                         var dataContent = line.Substring(6);

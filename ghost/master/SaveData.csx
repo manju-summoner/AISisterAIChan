@@ -21,13 +21,16 @@ public class SaveData : BaseSaveData {
     public string APIKey { get; set; }
 
     [DataMember]
-    public int ChoiceCount { get; set; } = 3;
+    public int ChoiceCount { get; set; } = 2;
 
     [DataMember]
     public Dictionary<string,string> AiProfile{ get; set; } = new Dictionary<string, string>();
 
     [DataMember]
     public Dictionary<string,string> UserProfile{ get; set; } = new Dictionary<string, string>();
+
+    [DataMember]
+    public bool IsDevMode { get; set; } = false;
 
     /// <summary>
     /// デフォルト値はここで設定
