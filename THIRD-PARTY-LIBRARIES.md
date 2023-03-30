@@ -7,12 +7,12 @@
 
 
 ## テンプレートゴースト
-rosalind_0_1_6_0_template
-著作権表示: Copyright (c) どっとステーション
+rosalind_0_1_6_0_template  
+著作権表示: Copyright (c) 2019 as-is-prog
 
 ## シェル
-ボトル猫様制作の「pink」を使用しています。
-http://catbottle.sakura.ne.jp/
+ボトル猫様制作の「pink」を使用しています。  
+http://catbottle.sakura.ne.jp/  
 著作権表示: Copyright (c) ボトル猫
 
 ## 使用ライブラリとそのライセンス
@@ -20,9 +20,10 @@ http://catbottle.sakura.ne.jp/
 #### SHIOLINK.dll
 著作権表示: Copyright (c) どっとステーション
 
-## Rosalind.CSharpの使用ライブラリとそのライセンス
-
 ### MIT License
+#### rosalind
+著作権表示: Copyright (c) 2019 as-is-prog
+
 #### Fody
 Costura.Fody, Fody
 
