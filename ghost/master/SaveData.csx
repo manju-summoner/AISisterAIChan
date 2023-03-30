@@ -23,6 +23,12 @@ public class SaveData : BaseSaveData {
     [DataMember]
     public int ChoiceCount { get; set; } = 3;
 
+    [DataMember]
+    public Dictionary<string,string> AiProfile{ get; set; } = new Dictionary<string, string>();
+
+    [DataMember]
+    public Dictionary<string,string> UserProfile{ get; set; } = new Dictionary<string, string>();
+
     /// <summary>
     /// デフォルト値はここで設定
     /// ただしsavedataのファイルがある際は初期化されないので、
