@@ -110,9 +110,9 @@ partial class AISisterAIChanGhost : Ghost
         else
         {
             if (partsName == CollisionParts.TwinTail)
-                BeginTalk("兄：（アイをツインテールをフワフワと持ち上げる）");
+                BeginTalk("兄：（アイのツインテールをフワフワと持ち上げる）");
             else if (partsName == CollisionParts.Skirt)
-                BeginTalk("兄：（アイをスカートをめくる）");
+                BeginTalk("兄：（アイのスカートをめくる）");
             else
             {
                 var parts = CollisionParts.GetCollisionPartsName(partsName);
