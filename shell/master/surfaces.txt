@@ -5,66 +5,548 @@ descript
     version,1
 }
 
-surface0{
-    element0,base,000_000.png,0,0
-}
 surface10{
     element0,base,surface10.png,0,0
 }
 
-surface1{
+surface0-9,11-99{
+    element0,base,000_000.png,0,0
+
+	collision0,82,53,144,93,head
+    collision1,101,127,114,133,cheek
+    collision2,134,117,147,125,cheek
+    collision3,118,129,132,134,mouth
+    collision4,113,54,154,76,ribbon
+    collision5,70,68,86,87,ribbon
+    collision6,155,55,206,141,twintail
+    collision7,43,60,80,176,twintail
+	collision8,97,165,145,200,bust
+	collision9,78,279,171,310,skirt
+    collision11,96,144,121,156,shoulder
+    collision12,145,143,169,169,shoulder
+    collision13,88,308,114,349,leg
+    collision14,128,313,159,348,leg
+}
+surface100-199{
+    element0,base,001_000.png,0,0
+
+	collision0,82,60,139,91,head
+    collision1,103,131,118,137,cheek
+    collision2,136,122,148,128,cheek
+    collision3,121,133,135,136,mouth
+    collision4,135,56,161,79,ribbon
+    collision5,64,81,81,102,ribbon
+    collision6,45,67,77,191,twintail
+    collision7,157,47,204,172,twintail
+	collision8,100,168,150,199,bust
+	collision9,81,277,168,306,skirt
+    collision11,92,147,117,161,shoulder
+    collision12,136,144,165,167,shoulder
+    collision13,88,308,114,348,leg
+    collision14,132,310,162,348,leg
+}
+surface200-299{
     element0,base,002_000.png,0,0
-    element1,overlay,002_007e.png,0,0
+
+	collision0,91,61,142,94,head
+    collision1,107,135,122,141,cheek
+    collision2,139,123,153,130,cheek
+    collision3,128,135,139,139,mouth
+    collision4,139,59,162,83,ribbon
+    collision5,75,77,88,99,ribbon
+    collision6,167,51,210,169,twintail
+    collision7,48,71,84,182,twintail
+	collision8,106,166,156,201,bust
+	collision9,77,274,168,310,skirt
+    collision11,107,147,126,158,shoulder
+    collision12,149,145,174,166,shoulder
+    collision13,86,306,116,348,leg
+    collision14,124,313,156,349,leg
+    collision15,153,254,174,274,hand
 }
-surface2{
+surface300-399{
+    element0,base,003.png,0,0
+
+	collision0,73,57,127,83,head
+    collision1,95,131,109,137,cheek
+    collision2,126,120,139,127,cheek
+    collision3,115,133,125,137,mouth
+    collision4,57,79,73,101,ribbon
+    collision5,126,56,149,75,ribbon
+    collision6,36,68,70,184,twintail
+    collision7,150,46,203,163,twintail
+	collision8,101,171,116,193,bust
+	collision9,64,275,165,308,skirt
+    collision11,88,148,112,160,shoulder
+    collision12,131,144,159,158,shoulder
+    collision13,81,307,112,349,leg
+    collision14,123,311,156,348,leg
+    collision15,124,160,152,179,hand
+    collision16,88,215,97,237,hand
+}
+surface400-499{
+    element0,base,004_000.png,0,0
+
+	collision0,103,54,149,81,head
+    collision1,104,124,117,131,cheek
+    collision2,139,121,152,128,cheek
+    collision3,122,131,133,136,mouth
+    collision4,83,61,100,80,ribbon
+    collision5,150,58,170,81,ribbon
+    collision6,26,47,80,152,twintail
+    collision7,170,50,229,148,twintail
+	collision8,104,169,160,205,bust
+	collision9,85,284,175,310,skirt
+    collision11,100,146,121,160,shoulder
+    collision12,148,144,171,161,shoulder
+    collision13,94,310,121,348,leg
+    collision14,134,313,165,348,leg
+    collision15,56,270,88,287,hand
+    collision16,191,270,225,290,hand
+}
+surface500-599{
+    element0,base,005_000.png,0,0
+
+	collision0,76,62,124,97,head
+    collision1,102,139,116,144,cheek
+    collision2,130,127,144,134,cheek
+    collision3,121,139,133,143,mouth
+    collision4,62,89,75,114,ribbon
+    collision5,122,65,142,87,ribbon
+    collision6,31,78,68,186,twintail
+    collision7,149,51,215,152,twintail
+	collision8,105,174,156,205,bust
+	collision9,84,280,179,314,skirt
+    collision11,99,152,124,164,shoulder
+    collision12,142,144,169,161,shoulder
+    collision13,90,311,123,348,leg
+    collision14,136,315,166,348,leg
+    collision15,40,186,71,208,hand
+    collision16,174,279,206,302,hand
+}
+surface700-799{
+    element0,base,007_000.png,0,0
+
+	collision0,110,58,161,88,head
+    collision1,103,118,116,128,cheek
+    collision2,135,121,150,131,cheek
+    collision3,119,127,127,133,mouth
+    collision4,87,64,104,80,ribbon
+    collision5,163,68,181,95,ribbon
+    collision6,58,51,81,124,twintail
+    collision7,178,60,212,192,twintail
+	collision8,98,166,148,205,bust
+	collision9,74,277,169,310,skirt
+    collision11,102,143,124,158,shoulder
+    collision12,145,144,169,167,shoulder
+    collision13,86,308,113,349,leg
+    collision14,127,312,158,348,leg
+}
+surface800-899{
     element0,base,008_000.png,0,0
-    element1,overlay,008_008.png,0,0
+
+	collision0,105,53,159,91,head
+    collision1,99,119,112,130,cheek
+    collision2,132,124,147,135,cheek
+    collision3,116,130,125,136,mouth
+    collision4,81,61,101,79,ribbon
+    collision5,159,71,177,96,ribbon
+    collision6,42,46,76,172,twintail
+    collision7,174,56,205,189,twintail
+	collision8,121,172,144,208,bust
+	collision9,74,279,157,308,skirt
+    collision11,84,144,101,157,shoulder
+    collision12,134,147,157,168,shoulder
+    collision13,83,306,112,348,leg
+    collision14,126,310,159,349,leg
+    collision15,105,137,121,165,hand
+    collision16,159,287,166,307,hand
 }
-surface3{
-    element0,base,000_000.png,0,0
-    element1,overlay,000_005.png,0,0
+
+surface.append1{
+    element1,overlay,000_000b.png,0,0W
 }
-surface4{
-    element0,base,003.png,0,0
-    element1,overlay,003_001b.png,0,0
+surface.append2{
+    element1,overlay,000_000c.png,0,0
 }
-surface5{
-    element0,base,003.png,0,0
-    element1,overlay,003_009.png,0,0
+surface.append3{
+    element1,overlay,000_000d.png,0,0
 }
-surface6{
-    element0,base,009_000.png,0,0
-    element1,overlay,009_004b.png,0,0
+surface.append11{
+    element1,overlay,000_001.png,0,0
 }
-surface7{
-    element0,base,000_000.png,0,0
+surface.append12{
+    element1,overlay,000_001b.png,0,0
+}
+surface.append13{
+    element1,overlay,000_001c.png,0,0
+}
+surface.append14{
+    element1,overlay,000_001d.png,0,0
+}
+surface.append20{
     element1,overlay,000_002.png,0,0
 }
-surface8{
-    element0,base,008_000.png,0,0
-    element1,overlay,008_006d.png,0,0
+surface.append20{
+    element1,overlay,000_002b.png,0,0
 }
-surface9{
-    element0,base,005_000.png,0,0
-    element1,overlay,005_008c.png,0,0
+surface.append21{
+    element1,overlay,000_002c.png,0,0
 }
-surface12{
-    element0,base,007_000.png,0,0
-    element1,overlay,007_004c.png,0,0
+surface.append22{
+    element1,overlay,000_002d.png,0,0
 }
-surface13{
-    element0,base,004_000.png,0,0
-    element1,overlay,004_002f.png,0,0
+surface.append23{
+    element1,overlay,000_002e.png,0,0
 }
-surface14{
-    element0,base,004_000.png,0,0
+surface.append24{
+    element1,overlay,000_002f.png,0,0
+}
+surface.append25{
+    element1,overlay,000_002g.png,0,0
+}
+surface.append30{
+    element1,overlay,000_003.png,0,0
+}
+surface.append31{
+    element1,overlay,000_003b.png,0,0
+}
+surface.append32{
+    element1,overlay,000_003c.png,0,0
+}
+surface.append33{
+    element1,overlay,000_003d.png,0,0
+}
+surface.append40{
+    element1,overlay,000_004.png,0,0
+}
+surface.append41{
+    element1,overlay,000_004b.png,0,0
+}
+surface.append42{
+    element1,overlay,000_004c.png,0,0
+}
+surface.append43{
+    element1,overlay,000_004d.png,0,0
+}
+surface.append50{
+    element1,overlay,000_005.png,0,0
+}
+surface.append51{
+    element1,overlay,000_005b.png,0,0
+}
+surface.append60{
+    element1,overlay,000_006.png,0,0
+}
+surface.append61{
+    element1,overlay,000_006b.png,0,0
+}
+surface.append70{
+    element1,overlay,000_007.png,0,0
+}
+surface.append71{
+    element1,overlay,000_007b.png,0,0
+}
+surface.append72{
+    element1,overlay,000_007c.png,0,0
+}
+surface.append73{
+    element1,overlay,000_007d.png,0,0
+}
+surface.append80{
+    element1,overlay,000_008.png,0,0
+}
+surface.append81{
+    element1,overlay,000_008b.png,0,0
+}
+surface.append82{
+    element1,overlay,000_008c.png,0,0
+}
+surface.append83{
+    element1,overlay,000_008d.png,0,0
+}
+surface.append84{
+    element1,overlay,000_008e.png,0,0
+}
+surface.append85{
+    element1,overlay,000_008f.png,0,0
+}
+surface.append90{
+    element1,overlay,000_009.png,0,0
+}
+surface.append91{
+    element1,overlay,000_009b.png,0,0
+}
+surface.append100{
+    element1,overlay,001_000.png,0,0
+}
+surface.append101{
+    element1,overlay,001_000b.png,0,0
+}
+surface.append110{
+    element1,overlay,001_001.png,0,0
+}
+surface.append130{
+    element1,overlay,001_003.png,0,0
+}
+surface.append131{
+    element1,overlay,001_003b.png,0,0
+}
+surface.append140{
+    element1,overlay,001_004.png,0,0
+}
+surface.append150{
+    element1,overlay,001_005.png,0,0
+}
+surface.append151{
+    element1,overlay,001_005b.png,0,0
+}
+surface.append160{
+    element1,overlay,001_006.png,0,0
+}
+surface.append161{
+    element1,overlay,001_006b.png,0,0
+}
+surface.append170{
+    element1,overlay,001_007.png,0,0
+}
+surface.append171{
+    element1,overlay,001_007b.png,0,0
+}
+surface.append200{
+    element1,overlay,002_000.png,0,0
+}
+surface.append201{
+    element1,overlay,002_000b.png,0,0
+}
+surface.append202{
+    element1,overlay,002_000c.png,0,0
+}
+surface.append203{
+    element1,overlay,002_000d.png,0,0
+}
+surface.append204{
+    element1,overlay,002_000e.png,0,0
+}
+surface.append205{
+    element1,overlay,002_000f.png,0,0
+}
+surface.append210{
+    element1,overlay,002_001.png,0,0
+}
+surface.append230{
+    element1,overlay,002_003.png,0,0
+}
+surface.append270{
+    element1,overlay,002_007.png,0,0
+}
+surface.append273{
+    element1,overlay,002_007c.png,0,0
+}
+surface.append274{
+    element1,overlay,002_007d.png,0,0
+}
+surface.append275{
+    element1,overlay,002_007e.png,0,0
+}
+surface.append280{
+    element1,overlay,002_008.png,0,0
+}
+surface.append281{
+    element1,overlay,002_008b.png,0,0
+}
+surface.append282{
+    element1,overlay,002_008c.png,0,0
+}
+surface.append290{
+    element1,overlay,002_009.png,0,0
+}
+surface.append291{
+    element1,overlay,002_009b.png,0,0
+}
+surface.append292{
+    element1,overlay,002_009c.png,0,0
+}
+surface.append300{
+    element1,overlay,003.png,0,0
+}
+surface.append310{
+    element1,overlay,003_001.png,0,0
+}
+surface.append311{
+    element1,overlay,003_001b.png,0,0
+}
+surface.append360{
+    element1,overlay,003_006.png,0,0
+}
+surface.append361{
+    element1,overlay,003_006b.png,0,0
+}
+surface.append370{
+    element1,overlay,003_007.png,0,0
+}
+surface.append380{
+    element1,overlay,003_008.png,0,0
+}
+surface.append390{
+    element1,overlay,003_009.png,0,0
+}
+surface.append391{
+    element1,overlay,003_009b.png,0,0
+}
+surface.append392{
+    element1,overlay,003_009c.png,0,0
+}
+surface.append400{
+    element1,overlay,004_000.png,0,0
+}
+surface.append410{
+    element1,overlay,004_001.png,0,0
+}
+surface.append420{
+    element1,overlay,004_002.png,0,0
+}
+surface.append421{
     element1,overlay,004_002b.png,0,0
 }
-surface15{
-    element0,base,001_000.png,0,0
-    element1,overlay,001_009.png,0,0
+surface.append422{
+    element1,overlay,004_002c.png,0,0
 }
-surface16{
-    element0,base,002_000.png,0,0
-    element1,overlay,002_007c.png,0,0
+surface.append423{
+    element1,overlay,004_002d.png,0,0
+}
+surface.append424{
+    element1,overlay,004_002e.png,0,0
+}
+surface.append425{
+    element1,overlay,004_002f.png,0,0
+}
+surface.append426{
+    element1,overlay,004_002g.png,0,0
+}
+surface.append500{
+    element1,overlay,005_000.png,0,0
+}
+surface.append501{
+    element1,overlay,005_000b.png,0,0
+}
+surface.append502{
+    element1,overlay,005_000c.png,0,0
+}
+surface.append503{
+    element1,overlay,005_000d.png,0,0
+}
+surface.append504{
+    element1,overlay,005_000e.png,0,0
+}
+surface.append540{
+    element1,overlay,005_004.png,0,0
+}
+surface.append541{
+    element1,overlay,005_004b.png,0,0
+}
+surface.append542{
+    element1,overlay,005_004c.png,0,0
+}
+surface.append570{
+    element1,overlay,005_007.png,0,0
+}
+surface.append580{
+    element1,overlay,005_008.png,0,0
+}
+surface.append581{
+    element1,overlay,005_008b.png,0,0
+}
+surface.append582{
+    element1,overlay,005_008c.png,0,0
+}
+surface.append700{
+    element1,overlay,007_000.png,0,0
+}
+surface.append701{
+    element1,overlay,007_000b.png,0,0
+}
+surface.append702{
+    element1,overlay,007_000c.png,0,0
+}
+surface.append705{
+    element1,overlay,007_000f.png,0,0
+}
+surface.append710{
+    element1,overlay,007_001.png,0,0
+}
+surface.append711{
+    element1,overlay,007_001b.png,0,0
+}
+surface.append710{
+    element1,overlay,007_001.png,0,0
+}
+surface.append730{
+    element1,overlay,007_003.png,0,0
+}
+surface.append740{
+    element1,overlay,007_004.png,0,0
+}
+surface.append741{
+    element1,overlay,007_004b.png,0,0
+}
+surface.append742{
+    element1,overlay,007_004c.png,0,0
+}
+surface.append743{
+    element1,overlay,007_004d.png,0,0
+}
+surface.append744{
+    element1,overlay,007_004e.png,0,0
+}
+surface.append750{
+    element1,overlay,007_005.png,0,0
+}
+surface.append751{
+    element1,overlay,007_005b.png,0,0
+}
+surface.append760{
+    element1,overlay,007_006.png,0,0
+}
+surface.append770{
+    element1,overlay,007_007.png,0,0
+}
+surface.append800{
+    element1,overlay,008_000.png,0,0
+}
+surface.append801{
+    element1,overlay,008_000b.png,0,0
+}
+surface.append802{
+    element1,overlay,008_000c.png,0,0
+}
+surface.append803{
+    element1,overlay,008_000d.png,0,0
+}
+surface.append830{
+    element1,overlay,008_003.png,0,0
+}
+surface.append831{
+    element1,overlay,008_003b.png,0,0
+}
+surface.append840{
+    element1,overlay,008_004.png,0,0
+}
+surface.append860{
+    element1,overlay,008_006.png,0,0
+}
+surface.append861{
+    element1,overlay,008_006b.png,0,0
+}
+surface.append862{
+    element1,overlay,008_006c.png,0,0
+}
+surface.append863{
+    element1,overlay,008_006d.png,0,0
+}
+surface.append870{
+    element1,overlay,008_007.png,0,0
+}
+surface.append880{
+    element1,overlay,008_008.png,0,0
 }

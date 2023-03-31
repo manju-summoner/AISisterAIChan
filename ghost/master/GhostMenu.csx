@@ -12,14 +12,6 @@ using System.Threading.Tasks;
 
 partial class AISisterAIChanGhost : Ghost
 {
-    public override string OnMouseDoubleClick(IDictionary<int, string> reference, string mouseX, string mouseY, string charId, string partsName, string buttonName, DeviceType deviceType)
-    {
-        switch (partsName)
-        {
-            default:
-                return OpenMenu();
-        }
-    }
 
     private string OpenMenu()
     {
