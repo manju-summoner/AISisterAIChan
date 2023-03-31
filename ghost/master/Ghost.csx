@@ -38,7 +38,8 @@ partial class AISisterAIChanGhost : Ghost
 
     public override string OnCommunicate(IDictionary<int, string> reference, string senderName = "", string script = "", IEnumerable<string> extInfo = null)
     {
-        BeginTalk("兄："+script);
+        var sender = senderName == "user" || senderName == null ? "兄" : senderName;
+        BeginTalk(sender + "：" + script);
         return "";
     }
 
