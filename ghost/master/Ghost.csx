@@ -225,7 +225,7 @@ partial class AISisterAIChanGhost : Ghost
     }
     public override string OnMinuteChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
     {
-        if(((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
+        if(canTalk && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
             return "\\s["+faceset["普通"][(int)random.Next(0, faceset["普通"].Length-1)]+"]";
         else
             return base.OnMinuteChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
