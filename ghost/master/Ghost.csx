@@ -138,8 +138,8 @@ partial class AISisterAIChanGhost : Ghost
         }
 
         var aiResponse = GetAIResponse(response);
-        var onichanResponse = GetOnichanRenponse(response);
         var surfaceId = GetSurfaceId(response);
+        var onichanResponse = GetOnichanRenponse(response);
         var talkBuilder = 
             new TalkBuilder()
             .Append($"\\_q\\s[{surfaceId}]")
@@ -160,41 +160,42 @@ partial class AISisterAIChanGhost : Ghost
                 else
                     deferredEventTalkBuilder = AppendWordWrapChoice(deferredEventTalkBuilder, choice);
             }
+            deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice("自分で入力する").LineFeed().HalfLine();
         }
+
         if(deferredEventTalkBuilder == null)
-            deferredEventTalkBuilder = talkBuilder.Marker().AppendChoice("回答を入力する").LineFeed().HalfLine();
+            deferredEventTalkBuilder = talkBuilder.Marker().AppendChoice("ログを見る").LineFeed();
         else
-            deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice("回答を入力する").LineFeed().HalfLine();
-
-        deferredEventTalkBuilder = deferredEventTalkBuilder
-            .Marker().AppendChoice("ログを見る").LineFeed()
-            .Marker().AppendChoice("会話を打ち切る").LineFeed();
-
-        return deferredEventTalkBuilder.Build().ContinueWith(id=>
-        {
-            if(onichanResponse.Contains(id))
-                BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{id}");
-            if(id == "ログを見る")
-                return new TalkBuilder()
-                .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
-                .Append(EscapeLineBreak(response)).LineFeed()
-                .HalfLine()
-                .Marker().AppendChoice("戻る")
+            deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice("ログを見る").LineFeed();
+        
+        return deferredEventTalkBuilder
+                .Marker().AppendChoice("会話を終える").LineFeed()
                 .Build()
-                .ContinueWith(x=>
+                .ContinueWith(id=>
                 {
-                    if(x=="戻る")
-                        return BuildTalk(response, createChoices, log);
+                    if(onichanResponse.Contains(id))
+                        BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{id}");
+                    if(id == "ログを見る")
+                        return new TalkBuilder()
+                        .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
+                        .Append(EscapeLineBreak(response)).LineFeed()
+                        .HalfLine()
+                        .Marker().AppendChoice("戻る")
+                        .Build()
+                        .ContinueWith(x=>
+                        {
+                            if(x=="戻る")
+                                return BuildTalk(response, createChoices, log);
+                            return "";
+                        });
+                    if(id == "自分で入力する")
+                        return new TalkBuilder().AppendUserInput().Build().ContinueWith(input=>
+                        {
+                            BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{input}");
+                            return "";
+                        });
                     return "";
                 });
-            if(id == "回答を入力する")
-                return new TalkBuilder().AppendUserInput().Build().ContinueWith(input=>
-                {
-                    BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{input}");
-                    return "";
-                });
-            return "";
-        });
         }catch(Exception e)
         {
             return e.ToString();
