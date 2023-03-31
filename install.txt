@@ -1,4 +1,6 @@
+charset,UTF8
+
 type,ghost
-name,ai_sister_ai_chan
+name,AI妹アイちゃん
 directory,ai_sister_ai_chan
 

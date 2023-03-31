@@ -3,4 +3,8 @@
 .gitignore,nonar,noupdate
 .gitmodules,nonar,noupdate
 README.md,nonar,noupdate
+aisisteraichan.gif,nonar,noupdate
 ghost/master/savedata.json,nonar,noupdate
+ghost/master/log/,nonar,noupdate
+ghost/master/profile/,nonar,noupdate
+shell/master/profile/,nonar,noupdate

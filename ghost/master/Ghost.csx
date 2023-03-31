@@ -38,15 +38,20 @@ partial class AISisterAIChanGhost : Ghost
     public AISisterAIChanGhost()
     {
         // 更新URL
-        Homeurl = "";
+        Homeurl = "https://manjubox.net/Install/ai_sister_ai_chan/";
 
         // 必ず読み込んでください
         _saveData = SaveDataManager.Load<SaveData>();
 
         SettingRandomTalk();
 
-        Resource.ReadmeButtonCaption = () => Util.RandomChoice("読んでね", "README");
-        Resource.VanishButtonCaption = () => Util.RandomChoice("アンインストール", "アンインストール");
+        Resource.SakuraPortalButtonCaption = () => "AI妹アイちゃん";
+        SakuraPortalSites.Add(new Site("配布ページ", "https://manjubox.net/ai_sister_ai_chan/"));
+        SakuraPortalSites.Add(new Site("ソースコード", "https://github.com/manju-summoner/AISisterAIChan"));
+
+        Resource.SakuraRecommendButtonCaption = () => "宣伝！";
+        SakuraRecommendSites.Add(new Site("ゆっくりMovieMaker4", "https://manjubox.net/ymm4/"));
+        SakuraRecommendSites.Add(new Site("饅頭遣い", "https://twitter.com/manju_summoner"));
     }
     private void SettingRandomTalk()
     {
