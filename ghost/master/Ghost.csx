@@ -16,6 +16,21 @@ using Shiorose.Resource.ShioriEvent;
 
 partial class AISisterAIChanGhost : Ghost
 {
+    readonly static Dictionary<string, int[]> faceset = new Dictionary<string, int[]>()
+    {
+        ["普通"] = new int[] { 0, 1, 2, 3, 100, 101, 200, 201, 202, 300, 400, 500, 501, 700, 800, 801, 802 },
+        ["恥ずかしい"] = new int[] { 10, 11, 12, 13, 210, 310, 311, 410, 710, 711, },
+        ["驚き"] = new int[] { 20, 21, 22, 23, 24, 25, 26, 420, 421, 422, 423, 424, 425 },
+        ["悲しい"] = new int[] { 30, 31, 32, 33, 130, 131, 230, 730, 830, 831, },
+        ["呆れる"]  = new int[] { 40, 41, 42, 43, 80, 81, 82, 83, 84, 85, 140, 203, 204, 205, 280, 281, 282, 380, 503, 540, 541, 542, 543, 580, 581, 582, 701, 702, 705, 740, 741, 742, 743, 744, 803, 840, 880 },
+        ["笑顔"] = new int[] { 50, 51, 150, 151, },
+        ["照れる"] = new int[]{ 750, 751, },
+        ["目を閉じる"] = new int[] { 60, 61, 160, 161, 360, 361, 502, 503, 760, 860, 861 },
+        ["怒り"] = new int[] { 70, 71, 72, 73, 170, 171, 270, 272, 273, 274, 370, 570, 770, 870 },
+        ["エッチなのは駄目"] = new int[] { 90, 91, 190, 290, 291, 292, 390, 391, 392 },//39.png
+        ["恍惚"] = new int[] { 110, 862, 863 },
+        ["青ざめる"] = new int[] { 426 },
+    };
     Random random = new Random();
     ChatGPTTalk chatGPTTalk = null;
     string messageLog = "";
@@ -103,6 +118,8 @@ partial class AISisterAIChanGhost : Ghost
 
         return base.OnMouseWheel(reference, mouseX, mouseY, wheelRotation, charId, partsName, deviceType);
     }
+    /*
+    //撫でが呼ばれなくなるので一旦コメントアウト
     public override string OnMouseHover(IDictionary<int, string> reference, string mouseX, string mouseY, string charId, string partsName, Shiorose.Resource.ShioriEvent.DeviceType deviceType)
     {
         var parts = CollisionParts.GetCollisionPartsName(partsName);
@@ -110,6 +127,7 @@ partial class AISisterAIChanGhost : Ghost
             BeginTalk($"兄：（アイの{parts}に手を添える）");
         return base.OnMouseHover(reference, mouseX, mouseY, charId, partsName, deviceType);
     }
+    */
 
 
 
@@ -204,6 +222,13 @@ partial class AISisterAIChanGhost : Ghost
             return BuildTalk(talk.Response, !talk.IsProcessing, log);
         }
         return base.OnSecondChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
+    }
+    public override string OnMinuteChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
+    {
+        if(((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
+            return "\\s["+faceset["普通"][(int)random.Next(0, faceset["普通"].Length-1)]+"]";
+        else
+            return base.OnMinuteChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
     }
 
     string BuildTalk(string response, bool createChoices, string log)
@@ -313,22 +338,6 @@ partial class AISisterAIChanGhost : Ghost
         var face = lines.FirstOrDefault(x => x.StartsWith("アイの表情："));
         if (face is null)
             return 0;
-
-        var faceset = new Dictionary<string, int[]>()
-        {
-            ["普通"] = new int[] { 0, 1, 2, 3, 100, 101, 200, 201, 202, 300, 400, 500, 501, 700, 800, 801, 802 },
-            ["恥ずかしい"] = new int[] { 10, 11, 12, 13, 210, 310, 311, 410, 710, 711, },
-            ["驚き"] = new int[] { 20, 21, 22, 23, 24, 25, 26, 420, 421, 422, 423, 424, 425 },
-            ["悲しい"] = new int[] { 30, 31, 32, 33, 130, 131, 230, 730, 830, 831, },
-            ["呆れる"]  = new int[] { 40, 41, 42, 43, 80, 81, 82, 83, 84, 85, 140, 203, 204, 205, 280, 281, 282, 380, 503, 540, 541, 542, 543, 580, 581, 582, 701, 702, 705, 740, 741, 742, 743, 744, 803, 840, 880 },
-            ["笑顔"] = new int[] { 50, 51, 150, 151, },
-            ["照れる"] = new int[]{ 750, 751, },
-            ["目を閉じる"] = new int[] { 60, 61, 160, 161, 360, 361, 502, 503, 760, 860, 861 },
-            ["怒り"] = new int[] { 70, 71, 72, 73, 170, 171, 270, 272, 273, 274, 370, 570, 770, 870 },
-            ["エッチなのは駄目"] = new int[] { 90, 91, 190, 290, 291, 292, 390, 391, 392 },//39.png
-            ["恍惚"] = new int[] { 110, 862, 863 },
-            ["青ざめる"] = new int[] { 426 },
-        };
 
         foreach(var set in faceset)
         {

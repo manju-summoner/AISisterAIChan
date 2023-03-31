@@ -32,6 +32,9 @@ public class SaveData : BaseSaveData {
     [DataMember]
     public bool IsDevMode { get; set; } = false;
 
+    [DataMember]
+    public bool IsRandomIdlingSurfaceEnabled { get; set; } = true;
+
     /// <summary>
     /// デフォルト値はここで設定
     /// ただしsavedataのファイルがある際は初期化されないので、
