@@ -5,10 +5,6 @@ descript
     version,1
 }
 
-surface10{
-    element0,base,surface10.png,0,0
-}
-
 surface0-9,11-99{
     element0,base,000_000.png,0,0
 
@@ -164,7 +160,7 @@ surface800-899{
 }
 
 surface.append1{
-    element1,overlay,000_000b.png,0,0W
+    element1,overlay,000_000b.png,0,0
 }
 surface.append2{
     element1,overlay,000_000c.png,0,0
@@ -187,22 +183,22 @@ surface.append14{
 surface.append20{
     element1,overlay,000_002.png,0,0
 }
-surface.append20{
+surface.append21{
     element1,overlay,000_002b.png,0,0
 }
-surface.append21{
+surface.append22{
     element1,overlay,000_002c.png,0,0
 }
-surface.append22{
+surface.append23{
     element1,overlay,000_002d.png,0,0
 }
-surface.append23{
+surface.append24{
     element1,overlay,000_002e.png,0,0
 }
-surface.append24{
+surface.append25{
     element1,overlay,000_002f.png,0,0
 }
-surface.append25{
+surface.append26{
     element1,overlay,000_002g.png,0,0
 }
 surface.append30{
@@ -477,9 +473,6 @@ surface.append710{
 }
 surface.append711{
     element1,overlay,007_001b.png,0,0
-}
-surface.append710{
-    element1,overlay,007_001.png,0,0
 }
 surface.append730{
     element1,overlay,007_003.png,0,0
