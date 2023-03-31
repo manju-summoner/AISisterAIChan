@@ -35,6 +35,7 @@ partial class AISisterAIChanGhost : Ghost
     ChatGPTTalk chatGPTTalk = null;
     string messageLog = "";
     double faceRate = 0;
+    bool isNademachi = false;
     public AISisterAIChanGhost()
     {
         // 更新URL
@@ -123,6 +124,24 @@ partial class AISisterAIChanGhost : Ghost
 
         return base.OnMouseWheel(reference, mouseX, mouseY, wheelRotation, charId, partsName, deviceType);
     }
+
+    public override string OnMouseMove(IDictionary<int, string> reference, string mouseX, string mouseY, string wheelRotation, string charId, string partsName, DeviceType deviceType)
+    {
+        if(!isNademachi && partsName == CollisionParts.Head)
+        {
+            //撫で待ち
+            isNademachi = true;
+            return "\\s[101]";
+        }
+        return base.OnMouseMove(reference, mouseX, mouseY, wheelRotation, charId, partsName, deviceType);
+    }
+
+    public override string OnMouseLeave(IDictionary<int, string> reference, string mouseX, string mouseY, string charId, string partsName, DeviceType deviceType)
+    {
+        isNademachi = false;
+        return base.OnMouseLeave(reference, mouseX, mouseY, charId, partsName, deviceType);
+    }
+
     /*
     //撫でが呼ばれなくなるので一旦コメントアウト
     public override string OnMouseHover(IDictionary<int, string> reference, string mouseX, string mouseY, string charId, string partsName, Shiorose.Resource.ShioriEvent.DeviceType deviceType)
