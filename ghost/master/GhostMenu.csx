@@ -56,6 +56,7 @@ partial class AISisterAIChanGhost : Ghost
         const string CHANGE_CHATGPT_API = "ChatGPTのAPIキーを変更する";
         const string CHANGE_RANDOMTALK_INTERVAL = "ランダムトークの頻度を変更する";
         const string CHANGE_CHOICE_COUNT = "選択肢の数を変更する";
+        string CHANGE_RANDOM_IDLING_SURFACE = "定期的に身じろぎする（現在："+(((SaveData)SaveData).IsRandomIdlingSurfaceEnabled ? "有効" : "無効")+"）";
         string CHANGE_DEVMODE = "開発者モードを変更する（現在："+(((SaveData)SaveData).IsDevMode ? "有効" : "無効")+"）";
         const string BAKC = "戻る";
         return new TalkBuilder()
@@ -63,8 +64,11 @@ partial class AISisterAIChanGhost : Ghost
         .LineFeed()
         .HalfLine()
         .Marker().AppendChoice(CHANGE_CHATGPT_API).LineFeed()
+        .HalfLine()
         .Marker().AppendChoice(CHANGE_RANDOMTALK_INTERVAL).LineFeed()
         .Marker().AppendChoice(CHANGE_CHOICE_COUNT).LineFeed()
+        .Marker().AppendChoice(CHANGE_RANDOM_IDLING_SURFACE).LineFeed()
+        .HalfLine()
         .Marker().AppendChoice(CHANGE_DEVMODE).LineFeed()
         .HalfLine()
         .Marker().AppendChoice(BAKC)
@@ -77,6 +81,11 @@ partial class AISisterAIChanGhost : Ghost
                 return ChangeRandomTalkIntervalTalk();
             else if (id == CHANGE_CHOICE_COUNT)
                 return ChangeChoiceCountTalk();
+            else if (id == CHANGE_RANDOM_IDLING_SURFACE)
+            {
+                ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled = !((SaveData)SaveData).IsRandomIdlingSurfaceEnabled;
+                return SettingsTalk();
+            }
             else if (id == CHANGE_DEVMODE)
             {
                 ((SaveData)SaveData).IsDevMode = !((SaveData)SaveData).IsDevMode;
