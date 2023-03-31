@@ -71,6 +71,9 @@ partial class AISisterAIChanGhost : Ghost
 アイの呼び方：アイ
 "+((SaveData)SaveData).UserProfile.Select(x=>x.Key+"："+x.Value).DefaultIfEmpty(string.Empty).Aggregate((a,b)=>a+"\r\n"+b)+@"
 
+# その他の情報
+日時："+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss dddd")+@"
+
 # 出力フォーマット
 アイのセリフ：{アイのセリフ}
 アイの表情：「普通」「うーん」「えぇ…」「にっこり」「恥ずかしい」「照れ隠し」「悲しい」「驚き」「恍惚」「しらけ」「だるー」「まじで！？」「びっくり」「むっつり」「いやそれは」
