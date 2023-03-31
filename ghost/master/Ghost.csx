@@ -240,7 +240,6 @@ partial class AISisterAIChanGhost : Ghost
     {
         try
         {
-
             if (((SaveData)SaveData).IsDevMode)
             {
                 if (!Directory.Exists(".\\log"))
@@ -257,11 +256,34 @@ partial class AISisterAIChanGhost : Ghost
                 .Append(aiResponse)
                 .LineFeed()
                 .HalfLine();
-            DeferredEventTalkBuilder deferredEventTalkBuilder = null;
+
             if (!createChoices)
                 return talkBuilder.Append($"\\_q...").LineFeed().Build();
+
             if (createChoices && string.IsNullOrEmpty(aiResponse))
-                return "";
+                 return new TalkBuilder()
+                    .Marker().AppendChoice("ログを見る").LineFeed()
+                    .Marker().AppendChoice("会話を終える").LineFeed()
+                    .Build()
+                    .ContinueWith(id =>
+                    {
+                        if (id == "ログを見る")
+                            return new TalkBuilder()
+                            .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
+                            .Append(EscapeLineBreak(response)).LineFeed()
+                            .HalfLine()
+                            .Marker().AppendChoice("戻る")
+                            .Build()
+                            .ContinueWith(x =>
+                            {
+                                if (x == "戻る")
+                                    return BuildTalk(response, createChoices, log);
+                                return "";
+                            });
+                        return "";
+                    });
+
+            DeferredEventTalkBuilder deferredEventTalkBuilder = null;
             if (onichanResponse.Length > 0)
             {
                 foreach (var choice in onichanResponse.Take(3))
