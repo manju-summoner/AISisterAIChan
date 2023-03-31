@@ -213,18 +213,18 @@ partial class AISisterAIChanGhost : Ghost
     string GetAIResponse(string response)
     {
         var lines = response.Split(new string[]{"\r\n", "\n", "\r"}, StringSplitOptions.None);
-        var aiResponse = lines.FirstOrDefault(x=>x.StartsWith("アイのセリフ："));
+        var aiResponse = lines.FirstOrDefault(x=>x.StartsWith("アイのセリフ：") || x.StartsWith("アイ："));
         if(aiResponse == null)
             return "";
-        return aiResponse.Replace("アイのセリフ：", "").Trim(' ','「','」');
+        return aiResponse.Replace("アイのセリフ：", "").Replace("アイ：", "").Trim(' ','「','」');
     }
     string[] GetOnichanRenponse(string response)
     {
         var lines = response.Split(new string[]{"\r\n", "\n", "\r"}, StringSplitOptions.None);
-        var onichanResponse = lines.Where(x=>x.StartsWith("兄のセリフ候補")).ToArray();
+        var onichanResponse = lines.Where(x=>x.StartsWith("兄のセリフ候補") || x.StartsWith("兄：")).ToArray();
         if(onichanResponse == null)
             return new string[]{};
-        return onichanResponse.Select(x=>x.Replace("兄のセリフ候補1：", "").Replace("兄のセリフ候補2：", "").Replace("兄のセリフ候補3：", "").Trim(' ','「','」')).ToArray();
+        return onichanResponse.Select(x=>x.Replace("兄のセリフ候補1：", "").Replace("兄のセリフ候補2：", "").Replace("兄のセリフ候補3：", "").Replace("兄：", "").Trim(' ','「','」')).ToArray();
     }
     int GetSurfaceId(string response)
     {
