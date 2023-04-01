@@ -3,6 +3,7 @@
 #load "ChatGPT.csx"
 #load "CollisionParts.csx"
 #load "GhostMenu.csx"
+#load "Surfaces.csx"
 using Shiorose;
 using Shiorose.Resource;
 using Shiorose.Support;
@@ -16,21 +17,6 @@ using Shiorose.Resource.ShioriEvent;
 
 partial class AISisterAIChanGhost : Ghost
 {
-    readonly static Dictionary<string, int[]> faceset = new Dictionary<string, int[]>()
-    {
-        ["普通"] = new int[] { 0, 1, 2, 3, 100, 101, 200, 201, 202, 300, 400, 500, 501, 700, 800, 801, 802 },
-        ["恥ずかしい"] = new int[] { 11, 12, 13, 14, 210, 310, 311, 410, 710, 711, },
-        ["驚き"] = new int[] { 20, 21, 22, 23, 24, 25, 26, 420, 421, 422, 423, 424, 425 },
-        ["悲しい"] = new int[] { 30, 31, 32, 33, 130, 131, 230, 730, 830, 831, },
-        ["呆れる"]  = new int[] { 40, 41, 42, 43, 80, 81, 82, 83, 84, 85, 140, 203, 204, 205, 280, 281, 282, 380, 503, 540, 541, 542, 543, 580, 581, 582, 701, 702, 705, 740, 741, 742, 743, 744, 803, 840, 880 },
-        ["笑顔"] = new int[] { 50, 51, 150, 151, },
-        ["照れる"] = new int[]{ 750, 751, },
-        ["目を閉じる"] = new int[] { 60, 61, 160, 161, 360, 361, 502, 503, 760, 860, 861 },
-        ["怒り"] = new int[] { 70, 71, 72, 73, 170, 171, 270, 272, 273, 274, 370, 570, 770, 870 },
-        ["エッチなのは駄目"] = new int[] { 90, 91, 190, 290, 291, 292, 390, 391, 392 },//39.png
-        ["恍惚"] = new int[] { 110, 862, 863 },
-        ["青ざめる"] = new int[] { 426 },
-    };
     Random random = new Random();
     ChatGPTTalk chatGPTTalk = null;
     string messageLog = "";
@@ -197,7 +183,7 @@ partial class AISisterAIChanGhost : Ghost
 
 # 出力フォーマット
 アイのセリフ：{アイのセリフ}
-アイの表情：「普通」「恥ずかしい」「驚き」「悲しい」「呆れる」「笑顔」「照れる」「目を閉じる」「怒り」「エッチなのは駄目」「恍惚」「青ざめる」
+アイの表情："+SurfaceCategory.All.Select(x=>$"「{x}」").Aggregate((a,b)=>a+b)+@"
 会話継続：「継続」「終了」
 " + Enumerable.Range(0, ((SaveData)SaveData).ChoiceCount).Select(x => "兄のセリフ候補" + (x + 1) + "：{兄のセリフ}").DefaultIfEmpty(string.Empty).Aggregate((a, b) => a + "\r\n" + b) + @"
 
@@ -249,8 +235,9 @@ partial class AISisterAIChanGhost : Ghost
     }
     public override string OnMinuteChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
     {
+        
         if(canTalk && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
-            return "\\s["+faceset["普通"][(int)random.Next(0, faceset["普通"].Length-1)]+"]";
+            return "\\s["+Surfaces.Of(SurfaceCategory.Normal).GetRaodomSurface()+"]";
         else
             return base.OnMinuteChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
     }
@@ -389,10 +376,10 @@ partial class AISisterAIChanGhost : Ghost
         if (face is null)
             return 0;
 
-        foreach(var set in faceset)
+        foreach(var category in SurfaceCategory.All)
         {
-            if (face.Contains(set.Key))
-                return set.Value[(int)Math.Min(set.Value.Length * faceRate, set.Value.Length - 1)];
+            if (face.Contains(category))
+                return Surfaces.Of(category).GetSurfaceFromRate(faceRate);
         }
 
         return 0;
