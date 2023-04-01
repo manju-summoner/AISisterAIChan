@@ -156,7 +156,7 @@ partial class AISisterAIChanGhost : Ghost
         faceRate = random.NextDouble();
         messageLog = message + "\r\n";
 
-        var prompt = @"以下のプロフィールと会話履歴を元に、アイのセリフのシミュレート結果を1つ出力してください。
+        var prompt = @"アイと兄が会話をしています。以下のプロフィールと会話履歴を元に、会話の続きとなるアイのセリフのシミュレート結果を1つ出力してください。
 
 # アイのプロフィール
 名前：アイ
@@ -179,7 +179,8 @@ partial class AISisterAIChanGhost : Ghost
 " + ((SaveData)SaveData).UserProfile.Select(x => x.Key + "：" + x.Value).DefaultIfEmpty(string.Empty).Aggregate((a, b) => a + "\r\n" + b) + @"
 
 # その他の情報
-日時：" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss dddd") + @"
+現在時刻：" + DateTime.Now.ToString("yyyy年MM月dd日 dddd HH:mm:ss") + @"
+家族構成：アイ、兄、父、母
 
 # 出力フォーマット
 アイのセリフ：{アイのセリフ}
