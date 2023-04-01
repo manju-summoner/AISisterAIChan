@@ -237,7 +237,7 @@ partial class AISisterAIChanGhost : Ghost
     public override string OnMinuteChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
     {
         
-        if(canTalk && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
+        if(canTalk && chatGPTTalk == null && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
             return "\\s["+Surfaces.Of(SurfaceCategory.Normal).GetRaodomSurface()+"]";
         else
             return base.OnMinuteChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
