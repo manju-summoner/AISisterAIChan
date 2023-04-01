@@ -244,6 +244,10 @@ partial class AISisterAIChanGhost : Ghost
 
     string BuildTalk(string response, bool createChoices, string log)
     {
+        const string INPUT_CHOICE_MYSELF = "自分で入力する";
+        const string SHOW_LOGS = "ログを表示";
+        const string END_TALK = "会話を終える";
+        const string BACK = "戻る";
         try
         {
             if (((SaveData)SaveData).IsDevMode)
@@ -272,21 +276,21 @@ partial class AISisterAIChanGhost : Ghost
 
             if (createChoices && string.IsNullOrEmpty(aiResponse))
                  return new TalkBuilder()
-                    .Marker().AppendChoice("ログを見る").LineFeed()
-                    .Marker().AppendChoice("会話を終える").LineFeed()
+                    .Marker().AppendChoice(SHOW_LOGS).LineFeed()
+                    .Marker().AppendChoice(END_TALK).LineFeed()
                     .Build()
                     .ContinueWith(id =>
                     {
-                        if (id == "ログを見る")
+                        if (id == SHOW_LOGS)
                             return new TalkBuilder()
                             .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
                             .Append(EscapeLineBreak(response)).LineFeed()
                             .HalfLine()
-                            .Marker().AppendChoice("戻る")
+                            .Marker().AppendChoice(BACK)
                             .Build()
                             .ContinueWith(x =>
                             {
-                                if (x == "戻る")
+                                if (x == BACK)
                                     return BuildTalk(response, createChoices, log);
                                 return "";
                             });
@@ -303,35 +307,35 @@ partial class AISisterAIChanGhost : Ghost
                     else
                         deferredEventTalkBuilder = AppendWordWrapChoice(deferredEventTalkBuilder, choice);
                 }
-                deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice("自分で入力する").LineFeed().HalfLine();
+                deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice(INPUT_CHOICE_MYSELF).LineFeed().HalfLine();
             }
 
             if (deferredEventTalkBuilder == null)
-                deferredEventTalkBuilder = talkBuilder.Marker().AppendChoice("ログを見る").LineFeed();
+                deferredEventTalkBuilder = talkBuilder.Marker().AppendChoice(SHOW_LOGS).LineFeed();
             else
-                deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice("ログを見る").LineFeed();
+                deferredEventTalkBuilder = deferredEventTalkBuilder.Marker().AppendChoice(SHOW_LOGS).LineFeed();
 
             return deferredEventTalkBuilder
-                    .Marker().AppendChoice("会話を終える").LineFeed()
+                    .Marker().AppendChoice(END_TALK).LineFeed()
                     .Build()
                     .ContinueWith(id =>
                     {
                         if (onichanResponse.Contains(id))
                             BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{id}");
-                        if (id == "ログを見る")
+                        if (id == SHOW_LOGS)
                             return new TalkBuilder()
                             .Append("\\_q").Append(EscapeLineBreak(log)).LineFeed()
                             .Append(EscapeLineBreak(response)).LineFeed()
                             .HalfLine()
-                            .Marker().AppendChoice("戻る")
+                            .Marker().AppendChoice(BACK)
                             .Build()
                             .ContinueWith(x =>
                             {
-                                if (x == "戻る")
+                                if (x == BACK)
                                     return BuildTalk(response, createChoices, log);
                                 return "";
                             });
-                        if (id == "自分で入力する")
+                        if (id == INPUT_CHOICE_MYSELF)
                             return new TalkBuilder().AppendUserInput().Build().ContinueWith(input =>
                             {
                                 BeginTalk($"{log}アイ：{aiResponse}\r\n兄：{input}");
