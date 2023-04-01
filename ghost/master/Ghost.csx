@@ -18,6 +18,7 @@ using Shiorose.Resource.ShioriEvent;
 partial class AISisterAIChanGhost : Ghost
 {
     Random random = new Random();
+    bool isTalking = false;
     ChatGPTTalk chatGPTTalk = null;
     string messageLog = "";
     double faceRate = 0;
@@ -218,6 +219,12 @@ partial class AISisterAIChanGhost : Ghost
         chatGPTTalk = new ChatGPTTalk(((SaveData)SaveData).APIKey, request);
     }
 
+    public override string OnSurfaceRestore(IDictionary<int, string> reference, string sakuraSurface, string keroSurface)
+    {
+        isTalking = false;
+        return base.OnSurfaceRestore(reference, sakuraSurface, keroSurface);
+    }
+
     public override string OnSecondChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
     {
         if (canTalk && chatGPTTalk != null)
@@ -237,7 +244,7 @@ partial class AISisterAIChanGhost : Ghost
     public override string OnMinuteChange(IDictionary<int, string> reference, string uptime, bool isOffScreen, bool isOverlap, bool canTalk, string leftSecond)
     {
         
-        if(canTalk && chatGPTTalk == null && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
+        if(canTalk && !isTalking && ((SaveData)SaveData).IsRandomIdlingSurfaceEnabled)
             return "\\s["+Surfaces.Of(SurfaceCategory.Normal).GetRaodomSurface()+"]";
         else
             return base.OnMinuteChange(reference, uptime, isOffScreen, isOverlap, canTalk, leftSecond);
@@ -251,6 +258,7 @@ partial class AISisterAIChanGhost : Ghost
         const string BACK = "戻る";
         try
         {
+            isTalking = true;
             if (((SaveData)SaveData).IsDevMode)
             {
                 if (!Directory.Exists(".\\log"))
