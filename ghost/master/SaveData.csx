@@ -16,6 +16,10 @@ public class SaveData : BaseSaveData {
     // int TalkInterval => ランダムトークの間隔
     // string UserName => ユーザ名
 
+    //ベースクラスのTalkIntervalに[DataMember]が付いていないので値が保存されない
+    [DataMember]
+    public int TalkInterval2 { get=>TalkInterval; set=>TalkInterval=value; }
+
     // 項目追加したい場合の定義はこんな感じ
     [DataMember]
     public string APIKey { get; set; }

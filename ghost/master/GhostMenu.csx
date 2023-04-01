@@ -125,25 +125,25 @@ partial class AISisterAIChanGhost : Ghost
                                     switch(id)
                                     {
                                         case "10秒":
-                                            SaveData.TalkInterval = 10;
+                                            ((SaveData)SaveData).TalkInterval2 = 10;
                                             return new TalkBuilder().Append("10秒に1回話すね。").BuildWithAutoWait();
                                         case "30秒":
-                                            SaveData.TalkInterval = 30;
+                                            ((SaveData)SaveData).TalkInterval = 30;
                                             return new TalkBuilder().Append("30秒に1回話すね。").BuildWithAutoWait();
                                         case "1分":
-                                            SaveData.TalkInterval = 60;
+                                            ((SaveData)SaveData).TalkInterval = 60;
                                             return new TalkBuilder().Append("1分に1回話すね。").BuildWithAutoWait();
                                         case "5分":
-                                            SaveData.TalkInterval = 300;
+                                            ((SaveData)SaveData).TalkInterval = 300;
                                             return new TalkBuilder().Append("5分に1回話すね。").BuildWithAutoWait();
                                         case "10分":
-                                            SaveData.TalkInterval = 600;
+                                            ((SaveData)SaveData).TalkInterval = 600;
                                             return new TalkBuilder().Append("10分に1回話すね。").BuildWithAutoWait();
                                         case "30分":
-                                            SaveData.TalkInterval = 1800;
+                                            ((SaveData)SaveData).TalkInterval = 1800;
                                             return new TalkBuilder().Append("30分に1回話すね。").BuildWithAutoWait();
                                         case "1時間":
-                                            SaveData.TalkInterval = 3600;
+                                            ((SaveData)SaveData).TalkInterval = 3600;
                                             return new TalkBuilder().Append("1時間に1回話すね。").BuildWithAutoWait();
                                         default:
                                             return new TalkBuilder().Append("また何か変えたくなったら呼んでね。").BuildWithAutoWait();
