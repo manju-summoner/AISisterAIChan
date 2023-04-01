@@ -277,7 +277,11 @@ partial class AISisterAIChanGhost : Ghost
                 .HalfLine();
 
             if (!createChoices)
+            {
+                foreach(var choice in onichanResponse)
+                    talkBuilder = talkBuilder.Marker().Append(choice).LineFeed();
                 return talkBuilder.Append($"\\_q...").LineFeed().Build();
+            }
 
             if (createChoices && string.IsNullOrEmpty(aiResponse))
                  return new TalkBuilder()
