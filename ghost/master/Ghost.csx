@@ -114,7 +114,7 @@ partial class AISisterAIChanGhost : Ghost
 
     public override string OnMouseMove(IDictionary<int, string> reference, string mouseX, string mouseY, string wheelRotation, string charId, string partsName, DeviceType deviceType)
     {
-        if(!isNademachi && partsName == CollisionParts.Head)
+        if(!isNademachi && !isTalking && partsName == CollisionParts.Head)
         {
             //撫で待ち
             isNademachi = true;
