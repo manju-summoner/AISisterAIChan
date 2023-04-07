@@ -4,6 +4,7 @@
 #load "CollisionParts.csx"
 #load "GhostMenu.csx"
 #load "Surfaces.csx"
+#load "Log.csx"
 using Shiorose;
 using Shiorose.Resource;
 using Shiorose.Support;
@@ -196,11 +197,7 @@ partial class AISisterAIChanGhost : Ghost
 " + messageLog;
 
         if (((SaveData)SaveData).IsDevMode)
-        {
-            if (!Directory.Exists(".\\log"))
-                Directory.CreateDirectory(".\\log");
-            File.WriteAllText(".\\log\\prompt.txt", prompt);
-        }
+            Log.WriteAllText(Log.Prompt, prompt);
 
         var request = new ChatGPTRequest()
         {
@@ -259,11 +256,7 @@ partial class AISisterAIChanGhost : Ghost
         {
             isTalking = true;
             if (((SaveData)SaveData).IsDevMode)
-            {
-                if (!Directory.Exists(".\\log"))
-                    Directory.CreateDirectory(".\\log");
-                File.WriteAllText(".\\log\\response.txt", response);
-            }
+                Log.WriteAllText(Log.Response, response);
 
             var aiResponse = GetAIResponse(response);
             var surfaceId = GetSurfaceId(response);
