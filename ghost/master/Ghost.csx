@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Shiorose.Resource.ShioriEvent;
+using System.Text.RegularExpressions;
 
 partial class AISisterAIChanGhost : Ghost
 {
@@ -362,20 +363,44 @@ partial class AISisterAIChanGhost : Ghost
     }
     string GetAIResponse(string response)
     {
+        var pattern = $"^{AIName}(のセリフ)?[：:](?<Serif>.+?)$";
         var lines = response.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
-        var aiResponse = lines.FirstOrDefault(x => x.StartsWith($"{AIName}のセリフ：") || x.StartsWith($"{AIName}："));
-        if (aiResponse == null)
+        var aiResponse = lines.Select(x=>Regex.Match(x, pattern)).Where(x=>x.Success).Select(x=>x.Groups["Serif"].Value).FirstOrDefault();
+        if (string.IsNullOrEmpty(aiResponse))
             return "";
-        return aiResponse.Replace($"{AIName}のセリフ：", "").Replace($"{AIName}：", "").Trim(' ', '「', '」');
+
+        return TrimSerifBrackets(aiResponse);
     }
+
     string[] GetOnichanRenponse(string response)
     {
+        var pattern = $"^{USERName}(のセリフ候補([0-9]+)?)?[：:](?<Serif>.+?)$";
         var lines = response.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
-        var onichanResponse = lines.Where(x => x.StartsWith($"{USERName}のセリフ候補") || x.StartsWith($"{USERName}：")).ToArray();
-        if (onichanResponse == null)
+        var onichanResponse = lines
+            .Select(x=>Regex.Match(x,pattern))
+            .Where(x=>x.Success)
+            .Select(x=>x.Groups["Serif"].Value)
+            .Where(x=>!string.IsNullOrWhiteSpace(x))
+            .ToArray();
+        if (onichanResponse.Length == 0)
             return new string[] { };
-        return onichanResponse.Select(x => x.Replace($"{USERName}のセリフ候補1：", "").Replace($"{USERName}のセリフ候補2：", "").Replace($"{USERName}のセリフ候補3：", "").Replace($"{USERName}：", "").Trim(' ', '「', '」')).ToArray();
+        return onichanResponse.Select(x=>TrimSerifBrackets(x)).ToArray();
     }
+
+    string TrimSerifBrackets(string serif)
+    {
+        serif = serif.Trim();
+        if(serif.StartsWith("「") && serif.EndsWith("」"))
+            return serif.Substring(1, serif.Length - 2);
+        if(serif.StartsWith("『") && serif.EndsWith("』"))
+            return serif.Substring(1, serif.Length - 2);
+        if(serif.StartsWith("\"") && serif.EndsWith("\""))
+            return serif.Substring(1, serif.Length - 2);
+        if(serif.StartsWith("'") && serif.EndsWith("'"))
+            return serif.Substring(1, serif.Length - 2);
+        return serif;
+    }
+    
     int GetSurfaceId(string response)
     {
         var lines = response.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
