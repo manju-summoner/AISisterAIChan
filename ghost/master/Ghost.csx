@@ -20,7 +20,7 @@ using System.Text.RegularExpressions;
 partial class AISisterAIChanGhost : Ghost
 {
     const string AIName = "アイ";
-    const string USERName = "兄";
+    const string USERName = "兄";//TODO: ベースクラスGhostにUserNameが定義されているので、そちらを活用するようにすると良いかもしれない。変数を利用するときはUSERNameとUserNameの違いに注意。
 
     Random random = new Random();
     bool isTalking = false;
@@ -400,7 +400,7 @@ partial class AISisterAIChanGhost : Ghost
             return serif.Substring(1, serif.Length - 2);
         return serif;
     }
-    
+
     int GetSurfaceId(string response)
     {
         var lines = response.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
