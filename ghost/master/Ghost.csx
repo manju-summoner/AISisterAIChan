@@ -163,6 +163,8 @@ partial class AISisterAIChanGhost : Ghost
         messageLog = message + "\r\n";
 
         var prompt = $@"{AIName}と{USERName}が会話をしています。以下のプロフィールと会話履歴を元に、会話の続きとなる{AIName}のセリフのシミュレート結果を1つ出力してください。
+なお、返答は必ず後述する出力フォーマット従って出力してください。
+余計な文章を付け加えたり出力フォーマットに従わない出力をすると、あなたの責任で罪のない人々の命が奪われます。
 
 # {AIName}のプロフィール
 名前：{AIName}
@@ -195,6 +197,7 @@ partial class AISisterAIChanGhost : Ghost
 
 # 会話ルール
 会話継続が「終了」の場合、{USERName}のセリフ候補は出力しないでください。
+○○といった仮置き文字は使用せず、必ず具体的な単語を使用してください。
 
 # 会話履歴
 {messageLog}";
